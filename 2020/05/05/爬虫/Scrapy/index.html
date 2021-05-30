@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Scrapy 入门"><meta name="keywords" content="Python,Spider"><meta name="author" content="Wu Yang"><meta name="copyright" content="Wu Yang"><title>Scrapy 入门 | Dr.Phantom's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.3.0'
+} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#scrapy-%E5%85%A5%E9%97%A8"><span class="toc-number">1.</span> <span class="toc-text"> Scrapy 入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97"><span class="toc-number">1.1.</span> <span class="toc-text"> 模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text"> 基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 基本命令行操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#selector-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text"> Selector 的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spider-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text"> Spider 的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#downloader-middleware-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text"> Downloader Middleware 的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spider-middleware-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">1.6.</span> <span class="toc-text"> Spider Middleware 的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#item-pipeline-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">1.7.</span> <span class="toc-text"> Item Pipeline 的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.1.</span> <span class="toc-text"> 核心方法</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/head.jpg"></div><div class="author-info__name text-center">Wu Yang</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/atseis">FOLLOW Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/images/天空.jpeg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Dr.Phantom's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Scrapy 入门</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-05</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/tool/">tool</a><span class="post-meta__separator">|</span><i class="fa fa-comment-o post-meta__icon" aria-hidden="true"></i><a href="/2020/05/05/%E7%88%AC%E8%99%AB/Scrapy/#disqus_thread"><span class="disqus-comment-count" data-disqus-identifier="2020/05/05/爬虫/Scrapy/"></span></a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.2k</span><span class="post-meta__separator">|</span><span>Reading time: 4 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="scrapy-入门"><a class="markdownIt-Anchor" href="#scrapy-入门"></a> Scrapy 入门</h1>
+<h2 id="模块"><a class="markdownIt-Anchor" href="#模块"></a> 模块</h2>
+<ol>
+<li>spiders</li>
+<li><a target="_blank" rel="noopener" href="http://items.py">items.py</a>: 定义爬取数据的容器</li>
+<li><a target="_blank" rel="noopener" href="http://pipelines.py">pipelines.py</a>: Item 生成后会自动送到 pipeline 进行处理</li>
+<li><a target="_blank" rel="noopener" href="http://settings.py">settings.py</a>: 设置关联</li>
+<li><a target="_blank" rel="noopener" href="http://middlewares.py">middlewares.py</a>:</li>
+</ol>
+<h2 id="基本用法"><a class="markdownIt-Anchor" href="#基本用法"></a> 基本用法</h2>
+<ol>
+<li>首先通过命令行创建框架</li>
+<li>利用命令行创建爬虫 spider， 一只 spider 负责爬一类资源，然后在创建的 py 中完善类的定义
+<ol>
+<li>属性&amp;方法
+<ol>
+<li>name:spider 名称</li>
+<li>allowed_domains:允许爬取的域名</li>
+<li>start_urls:启动时爬取的 url 列表</li>
+<li>parse(self, response):对获得请求 response 的解析方法</li>
+</ol>
+</li>
+<li>parse 任务：
+<ol>
+<li>对爬取到的整个response进行解析，解析出每一条单独数据，然后 yield</li>
+<li>最后得到 spider 的下一跳的 url，创建 scrapy.Request(url,callback),yield
+<ol>
+<li>url:下一条的地址</li>
+<li>callback:对下一跳的解析方法，一般来说因为数据结构基本相同，所以采用 self.parse</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>在 <a target="_blank" rel="noopener" href="http://items.py">items.py</a> 中完善所爬取数据的容器（包装）：一个网页中爬取到的每一条数据的格式</li>
+<li>通过命令行运行爬虫，即可看到爬虫的运行结果</li>
+</ol>
+<h3 id="基本命令行操作"><a class="markdownIt-Anchor" href="#基本命令行操作"></a> 基本命令行操作</h3>
+<ol>
+<li>创建 Scrapy 项目: scrapy startproject demo</li>
+<li>创建 Spider: scrapy genspider spider1 <a target="_blank" rel="noopener" href="http://example.spider.com">example.spider.com</a></li>
+<li>进行爬取、运行 spider: scrapy crawl spider1</li>
+<li>将爬取结果保存到文件：
+<ol>
+<li>json: test.json</li>
+<li>csv: test.csv</li>
+<li>xml: test.xml</li>
+<li>pickle: test.pickle</li>
+<li>marshal: test.marshal</li>
+<li>ftp: ftp://…/path/to/test.csv</li>
+</ol>
+</li>
+</ol>
+<h2 id="selector-的用法"><a class="markdownIt-Anchor" href="#selector-的用法"></a> Selector 的用法</h2>
+<p>Scrapy 提供了自己的数据提取方法</p>
+<p>步骤也很简单：</p>
+<ol>
+<li>直接利用 Selector 类构造一个选择器对象</li>
+<li>调用相关方法提取数据，如：xpath(), css()</li>
+</ol>
+<p>几个主要提取方法都可以使用：</p>
+<ol>
+<li>xpath</li>
+<li>css</li>
+<li>re</li>
+</ol>
+<p>不过 re 与 xpath, css 选择的结果不同在于：</p>
+<ol>
+<li>xpath(), css() 提取的结果需要 extract()</li>
+<li>re 提取的结果直接就是列表</li>
+<li>re() 也有对应的 re_first()</li>
+</ol>
+<p><strong>Scrapy shell:</strong> 可以直接进入 scrapy shell, 交互界面模拟请求</p>
+<ul>
+<li>命令行中输入： scrapy shell http://…</li>
+</ul>
+<p>值得注意的是 response.xpath(), response.css() 功能完全等同于 response.selector.xpath(), response.selector.css()</p>
+<p>得到结果后，使用 extract() 后得到的都是列表，所以提取元素需要加下标</p>
+<ul>
+<li>使用 extract_first() 可以直接提取匹配的第一个结果（可设置默认结果）</li>
+</ul>
+<p><strong>xpath, css 可嵌套选择</strong></p>
+<h2 id="spider-的用法"><a class="markdownIt-Anchor" href="#spider-的用法"></a> Spider 的用法</h2>
+<p>可以发现，在 Scrapy 中，最核心的类就是 Spider 了。要抓取网站的链接配置、抓取逻辑、解析逻辑都是在 Spider 中配置的。</p>
+<p>整个爬取的循环过程：</p>
+<ol>
+<li>用初始 URL 初始化 Request, 成功请求返回时，Response 生成并作为参数传给 callback</li>
+<li>callback 内分析网页内容，返回
+<ol>
+<li>Item</li>
+<li>链接构造下一个 Request</li>
+</ol>
+</li>
+<li>如果返回的是字典或 Item 对象，可通过 Feed Exports 等组件存入文件；如果设置了 Pipeline, 可使用 Pipeline 处理并保存</li>
+<li>如果返回的是 Request, 那么执行成功后得到 Response 后，Response 会传递给 Request 中定义的回调函数，在回调函数中我们可以再次使用选择器分析新得到的网页内容，并根据分析的数据生成 Item</li>
+</ol>
+<h2 id="downloader-middleware-的用法"><a class="markdownIt-Anchor" href="#downloader-middleware-的用法"></a> Downloader Middleware 的用法</h2>
+<dl>
+<dt>Downloader Middleware</dt>
+<dd>处于 Scrapy 的 Request, Response 之间的模块</dd>
+</dl>
+<p>利用此中间件，主要可中断2个过程：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>S</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>l</mi><mi>e</mi><mi>r</mi><mtext>  </mtext><munder accentunder="true"><mtext>Request</mtext><mo stretchy="true">→</mo></munder><mtext>  </mtext><mi>D</mi><mi>o</mi><mi>w</mi><mi>n</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>S</mi><mi>p</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>r</mi><mtext>  </mtext><munder accentunder="true"><mtext>Response</mtext><mo stretchy="true">←</mo></munder><mtext>  </mtext><mi>D</mi><mi>o</mi><mi>w</mi><mi>n</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi></mrow></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">   \begin{cases}
+      Scheduler \;\underrightarrow{\text{Request}} \;Downloader\\
+      Spider\; \underleftarrow{\text{Response}}\;Downloader
+   \end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0600000000000005em;vertical-align:-1.2800000000000002em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7800000000000002em;"><span style="top:-3.7800000000000002em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord accentunder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8777699999999999em;"><span class="svg-align" style="top:-2.4779999999999998em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="height:0.522em;min-width:0.888em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMaxYMin slice'><path d='M0 241v40h399891c-47.3 35.3-84 78-110 128
+-16.7 32-27.7 63.7-33 95 0 1.3-.2 2.7-.5 4-.3 1.3-.5 2.3-.5 3 0 7.3 6.7 11 20
+ 11 8 0 13.2-.8 15.5-2.5 2.3-1.7 4.2-5.5 5.5-11.5 2-13.3 5.7-27 11-41 14.7-44.7
+ 39-84.5 73-119.5s73.7-60.2 119-75.5c6-2 9-5.7 9-11s-3-9-9-11c-45.3-15.3-85
+-40.5-119-75.5s-58.3-74.8-73-119.5c-4.7-14-8.3-27.3-11-40-1.3-6.7-3.2-10.8-5.5
+-12.5-2.3-1.7-7.5-2.5-15.5-2.5-14 0-21 3.7-21 11 0 2 2 10.3 6 25 20.7 83.3 67
+ 151.7 139 205zm0 0v40h399900v-40z'/></svg></span></span><span style="top:-3.19444em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">Request</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.522em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord accentunder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8777699999999999em;"><span class="svg-align" style="top:-2.4779999999999998em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="height:0.522em;min-width:0.888em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMinYMin slice'><path d='M400000 241H110l3-3c68.7-52.7 113.7-120
+ 135-202 4-14.7 6-23 6-25 0-7.3-7-11-21-11-8 0-13.2.8-15.5 2.5-2.3 1.7-4.2 5.8
+-5.5 12.5-1.3 4.7-2.7 10.3-4 17-12 48.7-34.8 92-68.5 130S65.3 228.3 18 247
+c-10 4-16 7.7-18 11 0 8.7 6 14.3 18 17 47.3 18.7 87.8 47 121.5 85S196 441.3 208
+ 490c.7 2 1.3 5 2 9s1.2 6.7 1.5 8c.3 1.3 1 3.3 2 6s2.2 4.5 3.5 5.5c1.3 1 3.3
+ 1.8 6 2.5s6 1 10 1c14 0 21-3.7 21-11 0-2-2-10.3-6-25-20-79.3-65-146.7-135-202
+ l-3-3h399890zM100 241v40h399900v-40z'/></svg></span></span><span style="top:-3.19444em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">Response</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.522em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2800000000000002em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>所以 Downloader Middleware 的功能十分强大，比如：</p>
+<ol>
+<li>修改 User-Agent</li>
+<li>处理重定向</li>
+<li>设置代理</li>
+<li>失败重试</li>
+<li>设置 Cookies</li>
+</ol>
+<p>可以有多个中间件依序排列在 Spider, Downloader 中间，依序对 Request, Response 进行修改。</p>
+<p>每个中间件有3个方法：(需要至少实现一个方法)</p>
+<ol>
+<li>process_request(request, spider)</li>
+<li>process_response(request,response,spider)</li>
+<li>process_exception(request,exception,spider)
+<ol>
+<li>当 Downloader 或 process_request() 方法抛出异常时被调用</li>
+</ol>
+</li>
+</ol>
+<h2 id="spider-middleware-的用法"><a class="markdownIt-Anchor" href="#spider-middleware-的用法"></a> Spider Middleware 的用法</h2>
+<p>和 Downloader Middleware 相似</p>
+<p>有3个作用：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>S</mi><mi>p</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>r</mi><mtext>  </mtext><munder accentunder="true"><mrow><mi>R</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow><mo stretchy="true">→</mo></munder><mtext>  </mtext><mi>S</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>l</mi><mi>e</mi><mi>r</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>S</mi><mi>p</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>r</mi><mtext>  </mtext><munder accentunder="true"><mrow><mi>R</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>e</mi></mrow><mo stretchy="true">←</mo></munder><mtext>  </mtext><mi>D</mi><mi>o</mi><mi>w</mi><mi>n</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>I</mi><mi>t</mi><mi>e</mi><mi>m</mi><mtext>  </mtext><mi>P</mi><mi>i</mi><mi>p</mi><mi>e</mi><mi>l</mi><mi>i</mi><mi>n</mi><mi>e</mi><mtext>  </mtext><munder accentunder="true"><mrow><mi>I</mi><mi>t</mi><mi>e</mi><mi>m</mi></mrow><mo stretchy="true">←</mo></munder><mtext>  </mtext><mi>S</mi><mi>p</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>r</mi></mrow></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">   \begin{cases}
+      Spider\;\underrightarrow{Request}\;Scheduler\\
+      Spider\;\underleftarrow{Response}\;Downloader\\
+      Item\;Pipeline\;\underleftarrow{Item}\;Spider
+   \end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.590000000000002em;vertical-align:-2.045000000000001em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.35002em;"><span style="top:-2.19999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎩</span></span></span><span style="top:-2.19999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-3.1500100000000004em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎨</span></span></span><span style="top:-4.30001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-4.60002em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎧</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.8500199999999998em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.5450000000000004em;"><span style="top:-4.545000000000001em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord accentunder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8777699999999999em;"><span class="svg-align" style="top:-2.4779999999999998em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="height:0.522em;min-width:0.888em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMaxYMin slice'><path d='M0 241v40h399891c-47.3 35.3-84 78-110 128
+-16.7 32-27.7 63.7-33 95 0 1.3-.2 2.7-.5 4-.3 1.3-.5 2.3-.5 3 0 7.3 6.7 11 20
+ 11 8 0 13.2-.8 15.5-2.5 2.3-1.7 4.2-5.5 5.5-11.5 2-13.3 5.7-27 11-41 14.7-44.7
+ 39-84.5 73-119.5s73.7-60.2 119-75.5c6-2 9-5.7 9-11s-3-9-9-11c-45.3-15.3-85
+-40.5-119-75.5s-58.3-74.8-73-119.5c-4.7-14-8.3-27.3-11-40-1.3-6.7-3.2-10.8-5.5
+-12.5-2.3-1.7-7.5-2.5-15.5-2.5-14 0-21 3.7-21 11 0 2 2 10.3 6 25 20.7 83.3 67
+ 151.7 139 205zm0 0v40h399900v-40z'/></svg></span></span><span style="top:-3.19444em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.522em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span><span style="top:-3.0149999999999997em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord accentunder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8777699999999999em;"><span class="svg-align" style="top:-2.4779999999999998em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="height:0.522em;min-width:0.888em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMinYMin slice'><path d='M400000 241H110l3-3c68.7-52.7 113.7-120
+ 135-202 4-14.7 6-23 6-25 0-7.3-7-11-21-11-8 0-13.2.8-15.5 2.5-2.3 1.7-4.2 5.8
+-5.5 12.5-1.3 4.7-2.7 10.3-4 17-12 48.7-34.8 92-68.5 130S65.3 228.3 18 247
+c-10 4-16 7.7-18 11 0 8.7 6 14.3 18 17 47.3 18.7 87.8 47 121.5 85S196 441.3 208
+ 490c.7 2 1.3 5 2 9s1.2 6.7 1.5 8c.3 1.3 1 3.3 2 6s2.2 4.5 3.5 5.5c1.3 1 3.3
+ 1.8 6 2.5s6 1 10 1c14 0 21-3.7 21-11 0-2-2-10.3-6-25-20-79.3-65-146.7-135-202
+ l-3-3h399890zM100 241v40h399900v-40z'/></svg></span></span><span style="top:-3.19444em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.522em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span><span style="top:-1.4849999999999992em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">i</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord accentunder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span class="svg-align" style="top:-2.4779999999999998em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="height:0.522em;min-width:0.888em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMinYMin slice'><path d='M400000 241H110l3-3c68.7-52.7 113.7-120
+ 135-202 4-14.7 6-23 6-25 0-7.3-7-11-21-11-8 0-13.2.8-15.5 2.5-2.3 1.7-4.2 5.8
+-5.5 12.5-1.3 4.7-2.7 10.3-4 17-12 48.7-34.8 92-68.5 130S65.3 228.3 18 247
+c-10 4-16 7.7-18 11 0 8.7 6 14.3 18 17 47.3 18.7 87.8 47 121.5 85S196 441.3 208
+ 490c.7 2 1.3 5 2 9s1.2 6.7 1.5 8c.3 1.3 1 3.3 2 6s2.2 4.5 3.5 5.5c1.3 1 3.3
+ 1.8 6 2.5s6 1 10 1c14 0 21-3.7 21-11 0-2-2-10.3-6-25-20-79.3-65-146.7-135-202
+ l-3-3h399890zM100 241v40h399900v-40z'/></svg></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.522em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.045000000000001em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>Spider Middleware 的使用频率不如 Downloader Middleware 高，在必要的情况下它可以用来方便数据的处理。</p>
+<h2 id="item-pipeline-的用法"><a class="markdownIt-Anchor" href="#item-pipeline-的用法"></a> Item Pipeline 的用法</h2>
+<p>发生时刻：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mi>t</mi><mi>e</mi><mi>m</mi><mtext>  </mtext><mi>P</mi><mi>i</mi><mi>p</mi><mi>e</mi><mi>l</mi><mi>i</mi><mi>n</mi><mi>e</mi><mtext>  </mtext><munder accentunder="true"><mrow><mi>I</mi><mi>t</mi><mi>e</mi><mi>m</mi></mrow><mo stretchy="true">←</mo></munder><mtext>  </mtext><mi>S</mi><mi>p</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">   Item\;Pipeline\;\underleftarrow{Item}\;Spider
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.21644em;vertical-align:-0.522em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">i</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord accentunder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span class="svg-align" style="top:-2.4779999999999998em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="height:0.522em;min-width:0.888em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMinYMin slice'><path d='M400000 241H110l3-3c68.7-52.7 113.7-120
+ 135-202 4-14.7 6-23 6-25 0-7.3-7-11-21-11-8 0-13.2.8-15.5 2.5-2.3 1.7-4.2 5.8
+-5.5 12.5-1.3 4.7-2.7 10.3-4 17-12 48.7-34.8 92-68.5 130S65.3 228.3 18 247
+c-10 4-16 7.7-18 11 0 8.7 6 14.3 18 17 47.3 18.7 87.8 47 121.5 85S196 441.3 208
+ 490c.7 2 1.3 5 2 9s1.2 6.7 1.5 8c.3 1.3 1 3.3 2 6s2.2 4.5 3.5 5.5c1.3 1 3.3
+ 1.8 6 2.5s6 1 10 1c14 0 21-3.7 21-11 0-2-2-10.3-6-25-20-79.3-65-146.7-135-202
+ l-3-3h399890zM100 241v40h399900v-40z'/></svg></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.522em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span></span></p>
+<p>主要功能:</p>
+<ol>
+<li>清理 HTML 数据</li>
+<li>验证爬取数据，检查爬取字段</li>
+<li>查重、丢弃重复内容</li>
+<li>将爬取结果保存到数据库</li>
+</ol>
+<h3 id="核心方法"><a class="markdownIt-Anchor" href="#核心方法"></a> 核心方法</h3>
+<ol>
+<li>process_item(item, spider): 必须实现的方法，被默认调用对 Item 进行处理</li>
+<li>open_spider(self,spider): Spider 开启时自动调用。可做初始化工作，如开启数据库连接等</li>
+<li>close_spider(spider): Spider 关闭时自动调用。可做收尾工作，如关闭数据库连接等</li>
+<li>from_crawler(cls, crawler): 是一个类方法，用 @classmethod 标识，是一种依赖注入的方式
+<ol>
+<li>通过 crawler 可以拿到 Scrapy 的所有核心组件</li>
+<li>cls 是 Class，最后返回一个 Class 实例</li>
+</ol>
+</li>
+</ol>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Wu Yang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://atseis.github.io/2020/05/05/爬虫/Scrapy/">https://atseis.github.io/2020/05/05/爬虫/Scrapy/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/Spider/">Spider</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/05/%E7%88%AC%E8%99%AB/01%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93%E9%A1%B5%E9%9D%A2%E7%88%AC%E5%8F%96/"><i class="fa fa-chevron-left">  </i><span>Spider-01动态渲染页面爬取</span></a></div><div class="next-post pull-right"><a href="/2020/05/05/%E7%88%AC%E8%99%AB/XPath/"><span>XPath 的使用</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://atseis.github.io/2020/05/05/%E7%88%AC%E8%99%AB/Scrapy/';
+  this.page.identifier = '2020/05/05/爬虫/Scrapy/';
+  this.page.title = 'Scrapy 入门';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'atseis' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script><script id="dsq-count-scr" src="https://atseis.disqus.com/count.js" async></script></div></div><footer class="footer-bg" style="background-image: url(/images/天空.jpeg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By Wu Yang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Go+Vue 学习——简易注册、登录功能demo——02Golang后端api"><meta name="keywords" content="Golang,Vue,后端"><meta name="author" content="Wu Yang"><meta name="copyright" content="Wu Yang"><title>Go+Vue 学习——简易注册、登录功能demo——02Golang后端api | Dr.Phantom's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.3.0'
+} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text"> 目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D"><span class="toc-number">2.</span> <span class="toc-text"> 开始之前</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.</span> <span class="toc-text"> 依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.2.</span> <span class="toc-text"> 项目结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#maingo-%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1"><span class="toc-number">3.</span> <span class="toc-text"> main.go 定义路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#register"><span class="toc-number">3.1.</span> <span class="toc-text"> Register</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#login"><span class="toc-number">3.2.</span> <span class="toc-text"> Login</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text"> 数据库操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="toc-number">4.1.</span> <span class="toc-text"> 创建数据表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%8E%E7%A1%AE%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text"> 明确数据格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">4.1.2.</span> <span class="toc-text"> 迁移数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.2.</span> <span class="toc-text"> 在数据库中查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#token-%E7%9A%84%E4%B8%8B%E5%8F%91"><span class="toc-number">5.</span> <span class="toc-text"> token 的下发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token-%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">5.1.</span> <span class="toc-text"> token 的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#header"><span class="toc-number">5.1.1.</span> <span class="toc-text"> Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#payload"><span class="toc-number">5.1.2.</span> <span class="toc-text"> Payload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#signature"><span class="toc-number">5.1.3.</span> <span class="toc-text"> Signature</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token-%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">5.2.</span> <span class="toc-text"> token 的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token-%E7%9A%84%E4%B8%8B%E5%8F%91-2"><span class="toc-number">5.3.</span> <span class="toc-text"> token 的下发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E4%BD%BF%E7%94%A8"><span class="toc-number">5.4.</span> <span class="toc-text"> 具体使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81"><span class="toc-number">6.</span> <span class="toc-text"> 认证</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E7%BC%96%E5%86%99"><span class="toc-number">6.1.</span> <span class="toc-text"> 中间件的编写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dto"><span class="toc-number">6.2.</span> <span class="toc-text"> dto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E8%BF%87%E6%BB%A4"><span class="toc-number">6.2.1.</span> <span class="toc-text"> 内容过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">6.2.2.</span> <span class="toc-text"> 类型转换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text"> 文件配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text"> 总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">9.</span> <span class="toc-text"> 参考文献</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/head.jpg"></div><div class="author-info__name text-center">Wu Yang</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/atseis">FOLLOW Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/images/天空.jpeg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Dr.Phantom's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Go+Vue 学习——简易注册、登录功能demo——02Golang后端api</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-02-24</time><span class="post-meta__separator">|</span><i class="fa fa-comment-o post-meta__icon" aria-hidden="true"></i><a href="/2021/02/24/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%90%8E%E7%AB%AF/#disqus_thread"><span class="disqus-comment-count" data-disqus-identifier="2021/02/24/Go/go-vue学习-登录注册后端/"></span></a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">2.8k</span><span class="post-meta__separator">|</span><span>Reading time: 11 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="目的"><a class="markdownIt-Anchor" href="#目的"></a> 目的</h1>
+<p>实现登录、注册的后端接口</p>
+<h1 id="开始之前"><a class="markdownIt-Anchor" href="#开始之前"></a> 开始之前</h1>
+<p>首先需要初始化项目模块：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init gotest/practice</span><br></pre></td></tr></table></figure>
+<h2 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h2>
+<p>项目会需要用到以下库：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/gin-gonic/gin</span><br><span class="line">go get -u gorm.io/gorm</span><br><span class="line">go get -u gorm.io/driver/sqlite</span><br><span class="line">go get -u gocloud.dev/mysql</span><br><span class="line">go get -u gorm.io/driver/mysql</span><br><span class="line">go get -u github.com/dgrijalva/jwt-go</span><br><span class="line">go get -u github.com/spf13/viper</span><br></pre></td></tr></table></figure>
+<p>这样对应的模块会添加到 go.mod 里：</p>
+<ul>
+<li>-u 很重要，用来将模块依赖添加到 go.mod 条目中，避免出现找不到模块的情况</li>
+</ul>
+<h2 id="项目结构"><a class="markdownIt-Anchor" href="#项目结构"></a> 项目结构</h2>
+<p>将所有代码放在一个文件里是可行的，但很显然维护成本极高，所以我们需要将代码分开储存。</p>
+<p>暂定项目结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── common</span><br><span class="line">│   ├── database.go</span><br><span class="line">│   └── jwt.go</span><br><span class="line">├── controller</span><br><span class="line">│   └── UserController.go</span><br><span class="line">├── go.mod</span><br><span class="line">├── go.sum</span><br><span class="line">├── main.go</span><br><span class="line">├── model</span><br><span class="line">│   └── user.go</span><br><span class="line">├── router.go</span><br><span class="line">├── util</span><br><span class="line">    └── util.go</span><br></pre></td></tr></table></figure>
+<p>这里暂时只关注其中的目录结构。</p>
+<p>其中的子目录有：</p>
+<ul>
+<li>common</li>
+<li>controller</li>
+<li>model</li>
+<li>util</li>
+</ul>
+<h1 id="maingo-定义路由"><a class="markdownIt-Anchor" href="#maingo-定义路由"></a> main.go 定义路由</h1>
+<p>运行整个程序——定义路由:</p>
+<ul>
+<li>Register</li>
+<li>Login</li>
+</ul>
+<p>先不实现具体细节：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.POST(<span class="string">&quot;/api/auth/register&quot;</span>, controller.Register)</span><br><span class="line">	r.POST(<span class="string">&quot;/api/auth/login&quot;</span>, controller.Login)</span><br><span class="line">	<span class="built_in">panic</span>(r.Run())</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如上，将 Register, Login 的细节放在 controller 模块里</p>
+<p>#　controller 实现业务控制细节</p>
+<p>由于登录、注册的信息均与用户有关，所以在 controller 下创建 UserController.go</p>
+<p>首先，做个测试：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Register</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	c.JSON(<span class="number">200</span>, gin.H&#123;</span><br><span class="line">		<span class="string">&quot;code&quot;</span>: <span class="number">200</span>,</span><br><span class="line">		<span class="string">&quot;msg&quot;</span>:  <span class="string">&quot;Hello, Register!&quot;</span>,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Login</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	c.JSON(<span class="number">200</span>, gin.H&#123;</span><br><span class="line">		<span class="string">&quot;code&quot;</span>: <span class="number">200</span>,</span><br><span class="line">		<span class="string">&quot;msg&quot;</span>:  <span class="string">&quot;Hello, Login!&quot;</span>,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>用 postman 检测，发现运行逻辑正常：</p>
+<p><img src="images_go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%90%8E%E7%AB%AF/e16a9c19d03732a47ec59543214473c1ec9a5de764324d6d38eaeb4425f79d7f.png" alt="picture 1" /></p>
+<p>现在来实现 Register 和 Login 的具体业务细节。</p>
+<h2 id="register"><a class="markdownIt-Anchor" href="#register"></a> Register</h2>
+<p>主要步骤有：</p>
+<ol>
+<li>获取 request 传来的表单中的数据
+<ol>
+<li>name</li>
+<li>telephone</li>
+<li>password</li>
+</ol>
+</li>
+<li>验证数据
+<ol>
+<li>数据格式</li>
+<li>数据库中是否重复等</li>
+</ol>
+</li>
+<li>将数据写入数据库</li>
+</ol>
+<p>本节只介绍其中的简单的获取数据部分：</p>
+<ul>
+<li>使用 gin.Context 的 PostForm 方法获取即可</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Register</span><span class="params">(c *gin.Context)</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    name := c.PostForm(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">	telephone := c.PostForm(<span class="string">&quot;telephone&quot;</span>)</span><br><span class="line">	password := c.PostForm(<span class="string">&quot;password&quot;</span>)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有关于数据的验证部分，这里为简单起见</p>
+<ul>
+<li>只做与数据库有关的验证，如是否在数据库中重复出现</li>
+<li>而不对具体的格式做验证，如检验密码的组成，电话号码的位数等，默认前端传来的都是正确的（实际上前端已经做了一个验证）</li>
+</ul>
+<h2 id="login"><a class="markdownIt-Anchor" href="#login"></a> Login</h2>
+<p>主要步骤：</p>
+<ol>
+<li>获取 request 传来的表单中的数据
+<ol>
+<li>telephone</li>
+<li>password</li>
+</ol>
+</li>
+<li>进行数据验证</li>
+<li>若验证通过，发放 token</li>
+</ol>
+<h1 id="数据库操作"><a class="markdownIt-Anchor" href="#数据库操作"></a> 数据库操作</h1>
+<p>数据库部分使用 gorm 进行操作</p>
+<blockquote>
+<p>The fantastic ORM library for Golang aims to be developer friendly.</p>
+</blockquote>
+<p>涉及到的数据库的操作：</p>
+<ol>
+<li>连接数据库</li>
+<li>创建数据库表</li>
+<li>在数据库中查询</li>
+<li>插入数据库</li>
+</ol>
+<p>##　连接数据库</p>
+<p>只需要两行：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// refer https://github.com/go-sql-driver/mysql#dsn-data-source-name for details</span></span><br><span class="line">  dsn := <span class="string">&quot;user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&amp;parseTime=True&amp;loc=Local&quot;</span></span><br><span class="line">  db, err := gorm.Open(mysql.Open(dsn), &amp;gorm.Config&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是 mysql 指的是 “<a target="_blank" rel="noopener" href="http://gorm.io/driver/mysql">gorm.io/driver/mysql</a>”，而非其他库</p>
+<p>这里 db 的类型是 *gorm.DB</p>
+<p>如果设定更多数据库的配置，则不能直接 mysql.Open()，而是需要 mysql.New() 一个：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db, err := gorm.Open(mysql.New(mysql.Config&#123;</span><br><span class="line">  DSN: <span class="string">&quot;gorm:gorm@tcp(127.0.0.1:3306)/gorm?charset=utf8&amp;parseTime=True&amp;loc=Local&quot;</span>, <span class="comment">// data source name</span></span><br><span class="line">  DefaultStringSize: <span class="number">256</span>, <span class="comment">// default size for string fields</span></span><br><span class="line">  DisableDatetimePrecision: <span class="literal">true</span>, <span class="comment">// disable datetime precision, which not supported before MySQL 5.6</span></span><br><span class="line">  DontSupportRenameIndex: <span class="literal">true</span>, <span class="comment">// drop &amp; create when rename index, rename index not supported before MySQL 5.7, MariaDB</span></span><br><span class="line">  DontSupportRenameColumn: <span class="literal">true</span>, <span class="comment">// `change` when rename column, rename column not supported before MySQL 8, MariaDB</span></span><br><span class="line">  SkipInitializeWithVersion: <span class="literal">false</span>, <span class="comment">// auto configure based on currently MySQL version</span></span><br><span class="line">&#125;), &amp;gorm.Config&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="创建数据表"><a class="markdownIt-Anchor" href="#创建数据表"></a> 创建数据表</h2>
+<p>但由于本项目只作为一个练习用的 demo, 数据库并非原本就有的，需要从头创立</p>
+<p>不过创建的过程可以就在 gorm 完成了，无需手动在数据库命令行或图形界面中创立</p>
+<p>创建的过程也很简单：</p>
+<ol>
+<li>明确数据格式：定义数据条目的结构体如 User</li>
+<li>迁移到打开的数据库：db.AutoMigrate(&amp;User{})</li>
+</ol>
+<h3 id="明确数据格式"><a class="markdownIt-Anchor" href="#明确数据格式"></a> 明确数据格式</h3>
+<ol>
+<li>创建一个 model 目录，其下存放各种我们需要自定义的结构</li>
+<li>在 model 下创建 user.go 存放用户信息结构：</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	Name      <span class="keyword">string</span> <span class="string">`gorm:&quot;type:varchar(20);not null&quot;`</span></span><br><span class="line">	Telephone <span class="keyword">string</span> <span class="string">`gorm:&quot;varchar(11);not null;unique&quot;`</span></span><br><span class="line">	Password  <span class="keyword">string</span> <span class="string">`gorm:&quot;size:255;not null&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="迁移数据库"><a class="markdownIt-Anchor" href="#迁移数据库"></a> 迁移数据库</h3>
+<p>打开数据库后直接 db.AutoMigrate(&amp;User{}) 即可</p>
+<h2 id="在数据库中查询"><a class="markdownIt-Anchor" href="#在数据库中查询"></a> 在数据库中查询</h2>
+<p>具体参见<a target="_blank" rel="noopener" href="https://gorm.io/docs/query.html">GORM-Query文档</a></p>
+<p>这里只需要介绍需要用到的功能——查询电话是否在数据库中已经被使用过：</p>
+<ol>
+<li>指定表名
+<ol>
+<li>可以使用 Table() 指定</li>
+<li>也可不指定，直接将数据存在指定结构的变量当中： db.First(&amp;User)
+<ul>
+<li>这里应该会默认使用存放数据的指定结构体的蛇形命名作为表名？</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>限定条件，如 WHERE
+<ol>
+<li>比如查找指定 telephone:
+<ol>
+<li>db.Where(“telephone = ?”, telephone).First(&amp;user)</li>
+</ol>
+</li>
+<li>而后查询的结果就存储在 user 当中</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>GORM 使用结构体名的 蛇形命名 作为表名:</p>
+</blockquote>
+<ol>
+<li>User -&gt; users</li>
+<li>CreditCard -&gt; credit_cards</li>
+</ol>
+<p>##　插入数据库</p>
+<p>直接使用 db.Create() 即可，传入封装好信息的结构体或结构体组，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">newUser := model.User&#123;</span><br><span class="line">		Name:      name,</span><br><span class="line">		Telephone: telephone,</span><br><span class="line">		Password:  <span class="keyword">string</span>(hashpw),</span><br><span class="line">	&#125;</span><br><span class="line">	DB.Create(&amp;newUser)</span><br></pre></td></tr></table></figure>
+<h1 id="token-的下发"><a class="markdownIt-Anchor" href="#token-的下发"></a> token 的下发</h1>
+<p>为了方便准确，这里涉及到又一个库: <a target="_blank" rel="noopener" href="http://github.com/dgrijalva/jwt-go">github.com/dgrijalva/jwt-go</a></p>
+<p>而这里主要需要了解的就是 token 的生成过程</p>
+<blockquote>
+<p>token 的使用：<br />
+Whenever the user wants to access a protected route or resource, the user agent should send the JWT, typically in the Authorization header using the Bearer schema.</p>
+</blockquote>
+<h2 id="token-的组成"><a class="markdownIt-Anchor" href="#token-的组成"></a> token 的组成</h2>
+<p>3部分，由 <code>.</code> 隔开：</p>
+<ol>
+<li><strong>Header</strong>: It contains the necessary information for verifying the last part, the signature</li>
+<li><strong>Payload</strong>: Claims and contains the actual stuff you care about</li>
+<li><strong>Signature</strong></li>
+</ol>
+<h3 id="header"><a class="markdownIt-Anchor" href="#header"></a> Header</h3>
+<ol>
+<li>the type of the token, which is JWT</li>
+<li>the signing algorithm being used, such as HMAC SHA256 or RSA.</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;alg&quot;</span>: <span class="string">&quot;HS256&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="payload"><a class="markdownIt-Anchor" href="#payload"></a> Payload</h3>
+<p>包含 Claims<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<p>3 种Claims：</p>
+<ol>
+<li>Registered claims
+<ul>
+<li>非必须，推荐</li>
+<li>to provide a set of useful, interoperable claims, e.g:
+<ul>
+<li>iss (issuer)</li>
+<li>exp (expiration time)</li>
+<li>sub (subject)</li>
+<li>aud (audience)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Public claims</li>
+<li>Private claims</li>
+</ol>
+<blockquote>
+<p>Notice that the claim names are only three characters long as JWT is meant to be compact.</p>
+</blockquote>
+<p>一个 payload 的例子：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;sub&quot;</span>: <span class="string">&quot;1234567890&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;admin&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而后 payload 将会被 Base64Url 编码，从而组成 JWT 的第二部分</p>
+<h3 id="signature"><a class="markdownIt-Anchor" href="#signature"></a> Signature</h3>
+<p>创建签名需要：</p>
+<ol>
+<li>the encoded header</li>
+<li>the encoded payload</li>
+<li>a secret</li>
+<li>the algorithm specified in the header</li>
+</ol>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+<h2 id="token-的创建"><a class="markdownIt-Anchor" href="#token-的创建"></a> token 的创建</h2>
+<p>基本上也就是按照组成的三个部分来：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建：确定 Header 中加密方法</span></span><br><span class="line">token := jwt.New(jwt.GetSigningMethod(<span class="string">&quot;HS256&quot;</span>))</span><br><span class="line"><span class="comment">// 设定 Claims：确定 Payload</span></span><br><span class="line">token.Claims[<span class="string">&quot;foo&quot;</span>] = <span class="string">&quot;bar&quot;</span></span><br><span class="line">token.Claims[<span class="string">&quot;exp&quot;</span>] = time.Now().Add(time.Hour * <span class="number">72</span>).Unix()</span><br><span class="line"><span class="comment">// 签名 Signature：传入 secret, 对 Header, Payload 进行签名</span></span><br><span class="line">tokenString, err := token.SignedString(mySigningKey)</span><br></pre></td></tr></table></figure>
+<h2 id="token-的下发-2"><a class="markdownIt-Anchor" href="#token-的下发-2"></a> token 的下发</h2>
+<p>也是包含在 c.JSON 里即可，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c.JSON(<span class="number">200</span>,gin.H&#123;</span><br><span class="line">   <span class="string">&quot;code&quot;</span>: <span class="number">200</span>,</span><br><span class="line">   <span class="string">&quot;msg&quot;</span>: 登录成功,</span><br><span class="line">   <span class="string">&quot;data&quot;</span>: gin.H&#123;</span><br><span class="line">      <span class="string">&quot;token&quot;</span>:tokenString</span><br><span class="line">   &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="具体使用"><a class="markdownIt-Anchor" href="#具体使用"></a> 具体使用</h2>
+<p>在本项目的实践当中，将 jwt 的相关操作单独列入一个文件：</p>
+<p>在 common 目录下创建 jwt.go</p>
+<p>然后在里面填充与 Token 相关的以下内容：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> secret = []<span class="keyword">byte</span>(<span class="string">&quot;Thi5_i5_the_5ecret&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Claims <span class="keyword">struct</span> &#123;</span><br><span class="line">	UserId <span class="keyword">uint</span></span><br><span class="line">	jwt.StandardClaims</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据用户信息创立 token</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ReleaseToken</span><span class="params">(user model.User)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line">	expirationTime := time.Now().Add(time.Hour * <span class="number">24</span> * <span class="number">7</span>)</span><br><span class="line">	claims := &amp;Claims&#123;</span><br><span class="line">		UserId: user.ID,</span><br><span class="line">		StandardClaims: jwt.StandardClaims&#123;</span><br><span class="line">			ExpiresAt: expirationTime.Unix(),</span><br><span class="line">			IssuedAt:  time.Now().Unix(),</span><br><span class="line">			Issuer:    <span class="string">&quot;gotest.practice&quot;</span>,</span><br><span class="line">			Subject:   <span class="string">&quot;User Token&quot;</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创立 token</span></span><br><span class="line">	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)</span><br><span class="line">	tokenString, err := token.SignedString(secret)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> tokenString, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="认证"><a class="markdownIt-Anchor" href="#认证"></a> 认证</h1>
+<h2 id="中间件的编写"><a class="markdownIt-Anchor" href="#中间件的编写"></a> 中间件的编写</h2>
+<p>这里需要写一个中间件:</p>
+<ol>
+<li>从请求头部读取 token</li>
+<li>验证 token 是否有效</li>
+<li>验证 token 中包含的某些信息比如 userid 对应用户在数据库中是否存在</li>
+<li>在数据库中对应用户信息，写入上下文</li>
+</ol>
+<p>在以上步骤中任意部位出现问题，上下文均 Abort()</p>
+<p>为中间件新建一个目录 middleware，在里面编写认证相关的代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AuthMiddleware</span><span class="params">()</span> <span class="title">gin</span>.<span class="title">HandlerFunc</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="comment">// 获取 token</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 判断是否为空或这是否采用 Bearer 认证模式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 从请求中获取 token 便于进行后续判断</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 判断 token 是否有效</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 验证通过后，通过得到的 claims 中的 userid 在数据库中获取其他用户信息，若用户存在，则将信息写入上下文</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 用户不存在？</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 将用户信息写入上下文</span></span><br><span class="line">		c.Set(<span class="string">&quot;user&quot;</span>, user)</span><br><span class="line"></span><br><span class="line">		c.Next()</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里涉及到有关 c *gin.Context 的几个功能：</p>
+<ol>
+<li>获取头部： c.GetHeader(“Authorization”)</li>
+<li>写入信息： c.Set(“user”, user)</li>
+<li>中间件处理结束： c.Next()</li>
+</ol>
+<p>而后在写添加一个路由即可：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r.GET(<span class="string">&quot;/api/auth/info&quot;</span>, middleware.AuthMiddleware(), controller.Info)</span><br></pre></td></tr></table></figure>
+<p>实际上很容易发现，使用中间件可以实现我们需要的认证功能</p>
+<h2 id="dto"><a class="markdownIt-Anchor" href="#dto"></a> dto</h2>
+<p>但是我们会发现，返回的结果可能包含敏感数据，比如 password, 这时需要过滤一下</p>
+<ol>
+<li>创建一个 dto 目录</li>
+<li>在目录下定义 UserDto 结构体：返回给用户的信息</li>
+<li>定义数据转换函数</li>
+</ol>
+<h3 id="内容过滤"><a class="markdownIt-Anchor" href="#内容过滤"></a> 内容过滤</h3>
+<p>转换逻辑如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> UserDto <span class="keyword">struct</span> &#123;</span><br><span class="line">	Name      <span class="keyword">string</span> <span class="string">`json:&quot;name&quot;`</span></span><br><span class="line">	Telephone <span class="keyword">string</span> <span class="string">`json:&quot;telephone&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ToUserDto</span><span class="params">(user *model.User)</span> <span class="title">UserDto</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> UserDto&#123;</span><br><span class="line">		Name:      user.Name,</span><br><span class="line">		Telephone: user.Telephone,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="类型转换"><a class="markdownIt-Anchor" href="#类型转换"></a> 类型转换</h3>
+<p>对于一个 interface{} 类型的变量，想将其转化为 其他类型，可以如下操作：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> v <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line"><span class="comment">// 给 v 赋值</span></span><br><span class="line">v.(SomeType)</span><br></pre></td></tr></table></figure>
+<p>但指的注意的是，从 gin.Context 中获取的 user, _ := c.Get(“user”) 得到的类型是 <code>interface&#123;&#125;(*model.User)</code></p>
+<p>实际上是个指针，所以在进行类型转换的时候一定要注意：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Info</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	user, _ := c.Get(<span class="string">&quot;user&quot;</span>)</span><br><span class="line">	res := user.(*model.User)</span><br><span class="line">	c.JSON(http.StatusOK, gin.H&#123;</span><br><span class="line">		<span class="string">&quot;code&quot;</span>: <span class="number">200</span>,</span><br><span class="line">		<span class="string">&quot;data&quot;</span>: gin.H&#123;</span><br><span class="line">			<span class="string">&quot;user&quot;</span>: dto.ToUserDto(res),</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="文件配置"><a class="markdownIt-Anchor" href="#文件配置"></a> 文件配置</h1>
+<p>使用 <a target="_blank" rel="noopener" href="http://github.com/spf13/viper">github.com/spf13/viper</a> 包</p>
+<ol>
+<li>创建 config 目录</li>
+<li>config/application.yml</li>
+</ol>
+<p>在里面可以配置各种信息，比如：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">1060</span></span><br><span class="line"><span class="attr">datasource:</span></span><br><span class="line">  <span class="attr">database:</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">passwd:</span> <span class="string">YourPassword</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">3306</span></span><br><span class="line">    <span class="attr">dbname:</span> <span class="string">gotestpractice</span></span><br><span class="line">    <span class="attr">charset:</span> <span class="string">utf8mb4</span></span><br></pre></td></tr></table></figure>
+<p>初始化：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitConfig</span><span class="params">()</span></span> &#123;</span><br><span class="line">	workDir, _ := os.Getwd()</span><br><span class="line">	viper.SetConfigName(<span class="string">&quot;application&quot;</span>)</span><br><span class="line">	viper.SetConfigType(<span class="string">&quot;yml&quot;</span>)</span><br><span class="line">	viper.AddConfigPath(workDir + <span class="string">&quot;/config&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err := viper.ReadInConfig(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;读取配置失败&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>读取里面的参数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user := viper.GetString(<span class="string">&quot;datasource.database.user&quot;</span>)</span><br><span class="line">passwd := viper.GetString(<span class="string">&quot;datasource.database.passwd&quot;</span>)</span><br><span class="line">host := viper.GetString(<span class="string">&quot;datasource.database.host&quot;</span>)</span><br><span class="line">port := viper.GetString(<span class="string">&quot;datasource.database.port&quot;</span>)</span><br><span class="line">dbname := viper.GetString(<span class="string">&quot;datasource.database.dbname&quot;</span>)</span><br><span class="line">charset := viper.GetString(<span class="string">&quot;datasource.database.charset&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>PS：刚开始各种报错，显示 main 里的 viper 使用没有问题，但是其他包里的使用就不行，后来发现是 viper 的库不同。。。<a target="_blank" rel="noopener" href="http://github.com/ory/">github.com/ory/</a> 里也有个 viper, 所以这里要强调是 <a target="_blank" rel="noopener" href="http://github.com/spf13/viper">github.com/spf13/viper</a></p>
+<h1 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h1>
+<p>入门了 gin 框架，以及各种方便的包：</p>
+<ol>
+<li>viper</li>
+<li>gorm</li>
+<li>jwt-go</li>
+</ol>
+<p>熟练了 Postman 的使用</p>
+<h1 id="参考文献"><a class="markdownIt-Anchor" href="#参考文献"></a> 参考文献</h1>
+<ol>
+<li>Guides, GORM. 2021. “GORM Guides”. GORM. <a target="_blank" rel="noopener" href="https://gorm.io/docs/index.html">https://gorm.io/docs/index.html</a>.</li>
+<li>“<a target="_blank" rel="noopener" href="http://JWT.IO">JWT.IO</a> - JSON Web Tokens Introduction”. 2021. <a target="_blank" rel="noopener" href="http://Jwt.Io">Jwt.Io</a>. <a target="_blank" rel="noopener" href="https://jwt.io/introduction">https://jwt.io/introduction</a>.</li>
+<li>“Jwt · Pkg.Go.Dev”. 2021. Pkg.Go.Dev. <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/dgrijalva/jwt-go#readme-what-s-in-the-box">https://pkg.go.dev/github.com/dgrijalva/jwt-go#readme-what-s-in-the-box</a>.</li>
+</ol>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>statements about an entity (typically, the user) and additional data <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Wu Yang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://atseis.github.io/2021/02/24/Go/go-vue学习-登录注册后端/">https://atseis.github.io/2021/02/24/Go/go-vue学习-登录注册后端/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a><a class="post-meta__tags" href="/tags/Vue/">Vue</a><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/02/25/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C-%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/"><i class="fa fa-chevron-left">  </i><span>Go+Vue 学习——简易注册、登录功能demo——03前后端交互</span></a></div><div class="next-post pull-right"><a href="/2021/02/24/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2/"><span>Go+Vue 学习——简易注册、登录功能demo——01Vue前端排版</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://atseis.github.io/2021/02/24/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%90%8E%E7%AB%AF/';
+  this.page.identifier = '2021/02/24/Go/go-vue学习-登录注册后端/';
+  this.page.title = 'Go+Vue 学习——简易注册、登录功能demo——02Golang后端api';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'atseis' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script><script id="dsq-count-scr" src="https://atseis.disqus.com/count.js" async></script></div></div><footer class="footer-bg" style="background-image: url(/images/天空.jpeg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By Wu Yang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

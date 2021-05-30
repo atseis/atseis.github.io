@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="pwnablekr 基础笔记"><meta name="keywords" content="Bin"><meta name="author" content="Wu Yang"><meta name="copyright" content="Wu Yang"><title>pwnablekr 基础笔记 | Dr.Phantom's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.3.0'
+} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#fd"><span class="toc-number">1.</span> <span class="toc-text"> fd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#collision"><span class="toc-number">2.</span> <span class="toc-text"> collision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bof"><span class="toc-number">3.</span> <span class="toc-text"> bof</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag"><span class="toc-number">4.</span> <span class="toc-text"> flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#passcode"><span class="toc-number">5.</span> <span class="toc-text"> passcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#random"><span class="toc-number">6.</span> <span class="toc-text"> random</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#input"><span class="toc-number">7.</span> <span class="toc-text"> input</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#leg"><span class="toc-number">8.</span> <span class="toc-text"> leg</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mistake"><span class="toc-number">9.</span> <span class="toc-text"> mistake</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shellshock"><span class="toc-number">10.</span> <span class="toc-text"> shellshock</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">10.1.</span> <span class="toc-text"> 前置知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-number">10.2.</span> <span class="toc-text"> 解题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#coin1"><span class="toc-number">11.</span> <span class="toc-text"> coin1</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/head.jpg"></div><div class="author-info__name text-center">Wu Yang</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/atseis">FOLLOW Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/images/天空.jpeg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Dr.Phantom's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">pwnablekr 基础笔记</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-05</time><span class="post-meta__separator">|</span><i class="fa fa-comment-o post-meta__icon" aria-hidden="true"></i><a href="/2020/05/05/%E4%BA%8C%E8%BF%9B%E5%88%B6/pwnablekr%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/#disqus_thread"><span class="disqus-comment-count" data-disqus-identifier="2020/05/05/二进制/pwnablekr基础笔记/"></span></a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.3k</span><span class="post-meta__separator">|</span><span>Reading time: 4 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="fd"><a class="markdownIt-Anchor" href="#fd"></a> fd</h2>
+<p>直接根据程序要求输入即可</p>
+<h2 id="collision"><a class="markdownIt-Anchor" href="#collision"></a> collision</h2>
+<ul>
+<li>需要输入自定义的字符串</li>
+<li>但是无法显示的字符如何输入？比如：\x06\xce 这种
+<ul>
+<li>直接输入: program \x06\xce ？ -&gt; 不可取</li>
+<li>应该利用python输入：program $(python -c “print(’\x06\xce’)”)</li>
+</ul>
+</li>
+</ul>
+<h2 id="bof"><a class="markdownIt-Anchor" href="#bof"></a> bof</h2>
+<p>简单的栈溢出：</p>
+<ul>
+<li>首先用 checksec 查看程序编译得到的二进制文件，发现是32位</li>
+<li>所以参数的传递都是通过栈完成</li>
+<li>在观察程序逻辑：调用 func, 传入一个参数 key，函数内开辟空间 overflowme[32]</li>
+<li>由此可知，程序调用 func 后，栈结构以 %esp 为分界
+<ul>
+<li>上为 overflowme 开辟的空间</li>
+<li>下为传入参数 key</li>
+</ul>
+</li>
+<li>但问题在于在前一步的 checksec 中发现 canary, nx, pie 都被使用</li>
+<li>所以在 overflowme 对应空间和 %ebp 中间还会夹杂大小未知的其他元素</li>
+<li>所以偏移需要专门确定：使用 ida 反编译程序查看伪代码，会注意到数组起始地址为 [ebp-2Ch]</li>
+<li>然后便是构造 payload</li>
+</ul>
+<h2 id="flag"><a class="markdownIt-Anchor" href="#flag"></a> flag</h2>
+<p>此题重点在于对“文件损坏”的处理：</p>
+<ul>
+<li>本题只提供一个二进制文件</li>
+<li>二进制文件可顺利运行，但拖入 ida 后初看只有3个莫名其妙的函数，而且有地方显示有错误</li>
+<li>此处关键在于对 Hex 页面的浏览，会在最后发现 upx 字样：于是可知该文件被 upx 压缩过</li>
+<li>因此用 upx -d flag 解压缩</li>
+<li>再拖入 ida 中分析，发现 flag 以明文形式储存</li>
+</ul>
+<h2 id="passcode"><a class="markdownIt-Anchor" href="#passcode"></a> passcode</h2>
+<p>此题不知道大大们是怎么把文件拖入 ida 里分析的。。。</p>
+<p>主要点：</p>
+<ul>
+<li>如何确定类似 scanf(&quot;%d&quot;,passcode1) 中 passcode1 原本的值
+<ul>
+<li>发现 passcode1 的值可通过 welcome 中溢出写入，passcode2 因为 canary 的缘故无法改变</li>
+</ul>
+</li>
+<li>有了对 passcode1 的写入能力意味着什么
+<ul>
+<li>意味着可以在任意指定地点写入值：
+<ul>
+<li>先通过 welcome 中溢出写入 passcode1</li>
+<li>然后 scanf 时输入要写入的数值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>应该写入什么？
+<ul>
+<li>可以通过改写 plt 实现跳转：将 plt 中 printf 对应的偏移改成 system 调用中的偏移</li>
+</ul>
+</li>
+</ul>
+<p>收益：</p>
+<ul>
+<li>对汇编的理解
+<ul>
+<li>寄存器 %gs 会被用来设定 canary</li>
+<li>掌握栈结构的一个步骤
+<ul>
+<li>定位函数调用</li>
+<li>在调用前找参数设定</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="random"><a class="markdownIt-Anchor" href="#random"></a> random</h2>
+<p>直接写一个 C 程序，在里面取一个随机数与 0xdeadbeef 异或即可得到应该输入的 key 值</p>
+<h2 id="input"><a class="markdownIt-Anchor" href="#input"></a> input</h2>
+<p>本题感觉没涉及诸如栈溢出等漏洞，但是过程有点麻烦，总共有5步，而且有很多细节需要考虑</p>
+<p>5个步骤中，需要一步步去满足源程序 input.c 中的要求才能往下进行，最后在5个步骤的最后才会顺利进行到 system(&quot;/bin/cat flag&quot;)</p>
+<p>过五关内容:</p>
+<ol>
+<li>首先是运行程序时传入的参数数目需要为100，而且要满足指定位置参数的指定值</li>
+</ol>
+<ul>
+<li>这里可以通过对 pwn.process() 传入命令参数列表实现</li>
+</ul>
+<ol start="2">
+<li>然后第二关是需要先后从输入流、异常流读入数据和指定值进行比较。</li>
+</ol>
+<ul>
+<li>输入流可以直接通过输入，但如何从异常流读入指定数据？</li>
+<li>这里通过在 pwn.process() 中设置 stdin, stderr 重定向：
+<ul>
+<li>先将源程序所述的指定值写入文件</li>
+<li>然后设定重定向到文件</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>程序运行环境的设定</li>
+</ol>
+<ul>
+<li>通过在 pwn.process() 中设置 env</li>
+</ul>
+<ol start="4">
+<li>要求从指定文件中读入指定值：事先将值写入文件即可</li>
+<li>监听一个端口，然后从端口处发送数据并接受</li>
+</ol>
+<p>要点：</p>
+<ol>
+<li>主要在对 process() 各参数的熟悉和利用</li>
+<li>只能在 /tmp 下进行文件写操作，那么运行 process 时所处目录就在 /tmp 下，但源程序中所述 system(&quot;/bin/cat flag&quot;) 中的flag 却在 /home/input2 中。但切换到 /home/input2 下执行 python 命令又会发现 socket 连接不上
+<ol>
+<li>在 /tmp 下创建 /home/input2/flag 的软连接： ln -s /home/input2/flag flag</li>
+</ol>
+</li>
+</ol>
+<h2 id="leg"><a class="markdownIt-Anchor" href="#leg"></a> leg</h2>
+<p>要点：</p>
+<ul>
+<li>阅读 asm 汇编文件</li>
+<li>根据阅读结果构造输入</li>
+</ul>
+<h2 id="mistake"><a class="markdownIt-Anchor" href="#mistake"></a> mistake</h2>
+<p>要点：</p>
+<ul>
+<li>直接根据代码构造输入</li>
+</ul>
+<p>回顾：</p>
+<ul>
+<li>read 返回：
+<ul>
+<li>读取成功：实际读到的字节数</li>
+<li>出错：返回-1</li>
+</ul>
+</li>
+<li>open 返回：
+<ul>
+<li>打开的文件句柄</li>
+<li>失败：返回-1</li>
+</ul>
+</li>
+</ul>
+<h2 id="shellshock"><a class="markdownIt-Anchor" href="#shellshock"></a> shellshock</h2>
+<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<dl>
+<dt>UserID</dt>
+<dd>类Unix操作系统上的每个用户都由一个不同整数 UserID 来确定</dd>
+</dl>
+<p>对于进程而言，有3种UID：</p>
+<ul>
+<li>Real UserID
+<ul>
+<li>该进程拥有者的账号</li>
+<li>定义该进程可以访问的文件</li>
+</ul>
+</li>
+<li>Effective UserID
+<ul>
+<li>一般来说和 Real UserID 一样</li>
+<li>有时会变动从而让非特权用户可以访问只能被特权用户root访问的文件</li>
+</ul>
+</li>
+<li>Saved UserID
+<ul>
+<li>高特权用户需要做一些非特权任务时临时切换为非特权用户</li>
+</ul>
+</li>
+</ul>
+<p>然后 setresuid 就是设置的意思</p>
+<h3 id="解题"><a class="markdownIt-Anchor" href="#解题"></a> 解题</h3>
+<p>不过上面的这些对于这道题好像并没有什么用。。。</p>
+<p>本题的思路就是利用题目的 shell shock: 一个绕过 bash 的漏洞</p>
+<ul>
+<li>cve-2014-6271</li>
+</ul>
+<h2 id="coin1"><a class="markdownIt-Anchor" href="#coin1"></a> coin1</h2>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Wu Yang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://atseis.github.io/2020/05/05/二进制/pwnablekr基础笔记/">https://atseis.github.io/2020/05/05/二进制/pwnablekr基础笔记/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Bin/">Bin</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/05/Unity/00%E5%85%A5%E9%97%A8/"><i class="fa fa-chevron-left">  </i><span>Unity-00入门</span></a></div><div class="next-post pull-right"><a href="/2020/05/05/%E7%88%AC%E8%99%AB/00%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/"><span>Spider-00写在前面</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://atseis.github.io/2020/05/05/%E4%BA%8C%E8%BF%9B%E5%88%B6/pwnablekr%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/';
+  this.page.identifier = '2020/05/05/二进制/pwnablekr基础笔记/';
+  this.page.title = 'pwnablekr 基础笔记';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'atseis' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script><script id="dsq-count-scr" src="https://atseis.disqus.com/count.js" async></script></div></div><footer class="footer-bg" style="background-image: url(/images/天空.jpeg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By Wu Yang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

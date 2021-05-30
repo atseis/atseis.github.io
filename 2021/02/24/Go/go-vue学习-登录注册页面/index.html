@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Go+Vue 学习——简易注册、登录功能demo——01Vue前端排版"><meta name="keywords" content="Golang,Vue,前端"><meta name="author" content="Wu Yang"><meta name="copyright" content="Wu Yang"><title>Go+Vue 学习——简易注册、登录功能demo——01Vue前端排版 | Dr.Phantom's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.3.0'
+} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text"> 目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text"> 创建项目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97"><span class="toc-number">3.</span> <span class="toc-text"> 安装模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bootstrap-%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text"> bootstrap 的初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%B9%E5%8F%98%E9%A1%B5%E9%9D%A2%E4%B8%AD%E5%AF%BC%E8%88%AA%E5%85%83%E7%B4%A0"><span class="toc-number">5.</span> <span class="toc-text"> 改变页面中导航元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%B3%A8%E5%86%8C-%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2"><span class="toc-number">6.</span> <span class="toc-text"> 创建注册、登录页面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E5%88%9B%E5%BB%BA%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%88%86%E9%85%8D%E8%B7%AF%E7%94%B1"><span class="toc-number">6.1.</span> <span class="toc-text"> 为创建的页面分配路由</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AF%BC%E8%88%AA%E6%A0%8F%E8%B7%AF%E7%94%B1"><span class="toc-number">7.</span> <span class="toc-text"> 设置导航栏路由</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%92%E7%89%88%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="toc-number">8.</span> <span class="toc-text"> 排版：注册页面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E5%AE%9A%E8%A1%A8%E6%A0%BC%E8%BE%93%E5%85%A5%E6%A3%80%E9%AA%8C"><span class="toc-number">8.1.</span> <span class="toc-text"> 设定表格输入检验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-vuelidate"><span class="toc-number">8.1.1.</span> <span class="toc-text"> 如何使用 vuelidate</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%92%E7%89%88%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2"><span class="toc-number">9.</span> <span class="toc-text"> 排版：登录页面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">10.</span> <span class="toc-text"> 参考文献</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/head.jpg"></div><div class="author-info__name text-center">Wu Yang</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/atseis">FOLLOW Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/images/天空.jpeg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Dr.Phantom's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Go+Vue 学习——简易注册、登录功能demo——01Vue前端排版</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-02-24</time><span class="post-meta__separator">|</span><i class="fa fa-comment-o post-meta__icon" aria-hidden="true"></i><a href="/2021/02/24/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2/#disqus_thread"><span class="disqus-comment-count" data-disqus-identifier="2021/02/24/Go/go-vue学习-登录注册页面/"></span></a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.3k</span><span class="post-meta__separator">|</span><span>Reading time: 5 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="目的"><a class="markdownIt-Anchor" href="#目的"></a> 目的</h1>
+<p>搭建一个简单的页面：</p>
+<ul>
+<li>注册、登录的输入表格</li>
+<li>可以对输入内容进行验证</li>
+<li>导航栏</li>
+</ul>
+<h1 id="创建项目"><a class="markdownIt-Anchor" href="#创建项目"></a> 创建项目</h1>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create vuepractice</span><br></pre></td></tr></table></figure>
+<p>然后 yarn serve 边预览边添加功能</p>
+<h1 id="安装模块"><a class="markdownIt-Anchor" href="#安装模块"></a> 安装模块</h1>
+<p>需要用到：</p>
+<ol>
+<li>vue bootstrap bootstrap-vue: 控制排版</li>
+<li>vuelidate： 方便对表格内容进行验证</li>
+<li>vue-axios axios：　与后端进行连接</li>
+</ol>
+<p>所以：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yarn add vue bootstrap bootstrap-vue</span><br><span class="line">yarn add vuelidate</span><br><span class="line">yarn add vue-axios</span><br><span class="line">yarn add axios</span><br></pre></td></tr></table></figure>
+<h1 id="bootstrap-的初始化"><a class="markdownIt-Anchor" href="#bootstrap-的初始化"></a> bootstrap 的初始化</h1>
+<p><a target="_blank" rel="noopener" href="https://bootstrap-vue.org/docs">bootstrap官网文档</a></p>
+<ol>
+<li>在 main.js 中 import 和 Vue.use</li>
+<li>在 assets 下创建 scss/index.scss，并在其中 import:</li>
+</ol>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assets/scss/index.scss</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;~bootstrap-vue&quot;</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;~bootstrap&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>bootstrap 的使用姿势就是：</p>
+<ol>
+<li>在 bootstrap 官网上找想要用的模块</li>
+<li>然后把对应的 HTML 复制到对应项目中位置并修改</li>
+</ol>
+<h1 id="改变页面中导航元素"><a class="markdownIt-Anchor" href="#改变页面中导航元素"></a> 改变页面中导航元素</h1>
+<ol>
+<li>在 bootstrap 中搜索 navbar 并选择一个合适的组件</li>
+<li>创建 views/layout/Navbar.vue</li>
+<li>把组件代码复制到 Navbar.vue 中</li>
+<li>将 App.vue 中原先的 navbar 内容删去，并导入为现在的内容：
+<ol>
+<li>先 import 组件</li>
+<li>再
+<ol>
+<li>在 HTML 中使用标签</li>
+<li>export default</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>App.vue:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">    &lt;navbar &#x2F;&gt;</span><br><span class="line">    &lt;router-view &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import Navbar from &#39;.&#x2F;views&#x2F;layout&#x2F;Navbar.vue&#39;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    Navbar,</span><br><span class="line">  &#125;,</span><br><span class="line">  data() &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;scss&quot;&gt;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="创建注册-登录页面"><a class="markdownIt-Anchor" href="#创建注册-登录页面"></a> 创建注册、登录页面</h1>
+<ol>
+<li>创建 views/register/Register.vue</li>
+<li>创建 views/login/Login.vue</li>
+</ol>
+<p>先暂且只将页面设置为显示 Register 或 Login 这一行文字，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;Register&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;style lang&#x3D;&quot;scss&quot; scoped&gt;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="为创建的页面分配路由"><a class="markdownIt-Anchor" href="#为创建的页面分配路由"></a> 为创建的页面分配路由</h2>
+<p>在 router/index.js 中添加路由：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  path: <span class="string">&#x27;/register&#x27;</span>,</span><br><span class="line">  name: <span class="string">&#x27;register&#x27;</span>,</span><br><span class="line">  component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;../views/register/Register.vue&#x27;</span>),</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">  path: <span class="string">&#x27;/login&#x27;</span>,</span><br><span class="line">  name: <span class="string">&#x27;login&#x27;</span>,</span><br><span class="line">  component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;../views/login/Login.vue&#x27;</span>),</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>此时已经可以在 浏览器中访问页面</p>
+<h1 id="设置导航栏路由"><a class="markdownIt-Anchor" href="#设置导航栏路由"></a> 设置导航栏路由</h1>
+<p>现在设置导航栏，使之可以导向我们设置的登录、注册页面</p>
+<p>这里设置的方式有很多种，这里只介绍 2 种</p>
+<ul>
+<li>设置 href:</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">b-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;/register&quot;</span>&gt;</span>Register<span class="tag">&lt;/<span class="name">b-nav-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">b-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;/login&quot;</span>&gt;</span>Login<span class="tag">&lt;/<span class="name">b-nav-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>更改 $router 的名字：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">b-nav-item</span> @<span class="attr">click</span>=<span class="string">&quot;$router.replace(&#123;name:&#x27;register&#x27;&#125;)&quot;</span>&gt;</span>Register<span class="tag">&lt;/<span class="name">b-nav-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">b-nav-item</span> @<span class="attr">click</span>=<span class="string">&quot;$router.replace(&#123;name:&#x27;login&#x27;&#125;)&quot;</span>&gt;</span>Login<span class="tag">&lt;/<span class="name">b-nav-item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>经过比较发现第二种似乎快一些？（以后研究）</p>
+<h1 id="排版注册页面"><a class="markdownIt-Anchor" href="#排版注册页面"></a> 排版：注册页面</h1>
+<ol>
+<li>在 bootstrap 中搜索 form</li>
+<li>将合适的部分复制到 Register.vue 中并做相应修改</li>
+</ol>
+<p>通过这种方式来控制边距：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">b-row</span> <span class="attr">class</span>=<span class="string">&quot;mt-5&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">b-col</span> <span class="attr">md</span>=<span class="string">&quot;8&quot;</span> <span class="attr">offset-md</span>=<span class="string">&quot;2&quot;</span> <span class="attr">lg</span>=<span class="string">&quot;5&quot;</span> <span class="attr">offset-lg</span>=<span class="string">&quot;3&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">b-card</span> <span class="attr">title</span>=<span class="string">&quot;Register&quot;</span>&gt;</span></span><br><span class="line">      ...</span><br><span class="line">      <span class="tag">&lt;/<span class="name">b-card</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">b-col</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">b-row</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="设定表格输入检验"><a class="markdownIt-Anchor" href="#设定表格输入检验"></a> 设定表格输入检验</h2>
+<p>采用 vuelidate:</p>
+<ol>
+<li>在 main.js 中添加</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import Vuelidate from &#39;vuelidate&#39;;</span><br><span class="line">Vue.use(Vuelidate);</span><br></pre></td></tr></table></figure>
+<p>然后就可以使用了!</p>
+<h3 id="如何使用-vuelidate"><a class="markdownIt-Anchor" href="#如何使用-vuelidate"></a> 如何使用 vuelidate</h3>
+<p><a target="_blank" rel="noopener" href="https://www.vuelidate.cn/#getting-started">Vuelidate文档</a></p>
+<p>4个步骤：</p>
+<ol>
+<li>定义量</li>
+<li>完善规则</li>
+<li>验证过程</li>
+<li>在组件上配置</li>
+</ol>
+<ul>
+<li>第一，在 script 中定义需要验证的量：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">validations: &#123;</span><br><span class="line">    user: &#123;</span><br><span class="line">      name: &#123;</span><br><span class="line">      &#125;,</span><br><span class="line">      telephone: &#123;</span><br><span class="line">        required,</span><br><span class="line">        telephone: telephoneValidator,</span><br><span class="line">      &#125;,</span><br><span class="line">      password: &#123;</span><br><span class="line">        required,</span><br><span class="line">        minLength: minLength(<span class="number">6</span>),</span><br><span class="line">        maxLength: maxLength(<span class="number">20</span>),</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>第二，之后完善其中的验证规则即可，比如以上例子中：</p>
+<ol>
+<li>required, minLength, maxLength 均需要 import</li>
+<li>telephoneValidator 是自定义的验证规则</li>
+</ol>
+</li>
+<li>
+<p>而为了完善规则，或许需要导入或者自定义规则条件（在export 之前）：</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; required, minLength, maxLength &#125; <span class="keyword">from</span> <span class="string">&#x27;vuelidate/lib/validators&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> telephoneValidator = <span class="function">(<span class="params">value</span>) =&gt;</span> <span class="regexp">/^1[3|5|7|8]\d&#123;9&#125;$/</span>.test(value);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第三，需要定义检测错误的函数：
+<ul>
+<li>规则影响的是 vuelidate 带来的 $dirty, $error 等量（随着输入内容实时变化）
+<ul>
+<li>$dirty: 是否输入内容</li>
+<li>$error: 是否错误（不符合规则）：3种状态： true, false, null</li>
+</ul>
+</li>
+<li>但如何根据这些量实施检测需要自己实现</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  <span class="function"><span class="title">register</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">validateState</span>(<span class="params">key</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; $dirty, $error &#125; = <span class="built_in">this</span>.$v.user[key];</span><br><span class="line">    <span class="keyword">return</span> $dirty ? !$error : <span class="literal">null</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<ul>
+<li>最后，在组件上配置：</li>
+</ul>
+<p>举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;b-form-group id&#x3D;&quot;input-group-2&quot; label&#x3D;&quot;Your Telephone:&quot; label-for&#x3D;&quot;in2&quot;&gt;</span><br><span class="line">  &lt;b-form-input</span><br><span class="line">    id&#x3D;&quot;in2&quot;</span><br><span class="line">    v-model&#x3D;&quot;$v.user.telephone.$model&quot;</span><br><span class="line">    type&#x3D;&quot;telephone&quot;</span><br><span class="line">    placeholder&#x3D;&quot;Enter your telephone numbers&quot;</span><br><span class="line">    required</span><br><span class="line">    :state&#x3D;&quot;validateState(&#39;telephone&#39;)&quot;</span><br><span class="line">  &gt;&gt;&lt;&#x2F;b-form-input&gt;</span><br><span class="line">  &lt;b-form-invalid-feedback :state&#x3D;&quot;validateState(&#39;telephone&#39;)&quot;&gt;请输入正确格式的电话号码（11位）&lt;&#x2F;b-form-invalid-feedback&gt;</span><br><span class="line">&lt;&#x2F;b-form-group&gt;</span><br></pre></td></tr></table></figure>
+<p>上例中有2点需要注意：</p>
+<ol>
+<li>v-model 必须要引用 vuelidate 带来的量（很多都是以$开头的）</li>
+<li>:state 中设置为定义的检测函数，传入的参数一定要带引号！！！</li>
+</ol>
+<p>由上可看出，Vuelidate相比其他需要逐个配置的要方便地多，集中定义好规则后，配置时直接调用函数即可，更具可维护性</p>
+<p>可以在 Chrome 中查看 vuelidate 相关变量：<br />
+<img src="go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2/ade4c55d555b53145f7d15c8a384b371b116d05cda93e394948b47c704b44a99.png" alt="picture 1" /></p>
+<h1 id="排版登录页面"><a class="markdownIt-Anchor" href="#排版登录页面"></a> 排版：登录页面</h1>
+<p>与注册页面大同小异，不赘述</p>
+<h1 id="参考文献"><a class="markdownIt-Anchor" href="#参考文献"></a> 参考文献</h1>
+<ol>
+<li>“Vuelidate 中文网 | Vuelidate是非常强大的基于vue的表单验证框架”. 2021. <a target="_blank" rel="noopener" href="http://Vuelidate.Cn">Vuelidate.Cn</a>. <a target="_blank" rel="noopener" href="https://www.vuelidate.cn/#getting-started">https://www.vuelidate.cn/#getting-started</a>.</li>
+<li>
+<ol start="2021">
+<li><a target="_blank" rel="noopener" href="http://Bilibili.Com">Bilibili.Com</a>. <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1CE411H7bQ?p=11">https://www.bilibili.com/video/BV1CE411H7bQ?p=11</a>.</li>
+</ol>
+</li>
+<li><a target="_blank" rel="noopener" href="https://bootstrap-vue.org/docs/">https://bootstrap-vue.org/docs/</a></li>
+</ol>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Wu Yang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://atseis.github.io/2021/02/24/Go/go-vue学习-登录注册页面/">https://atseis.github.io/2021/02/24/Go/go-vue学习-登录注册页面/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a><a class="post-meta__tags" href="/tags/Vue/">Vue</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/02/24/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%90%8E%E7%AB%AF/"><i class="fa fa-chevron-left">  </i><span>Go+Vue 学习——简易注册、登录功能demo——02Golang后端api</span></a></div><div class="next-post pull-right"><a href="/2021/02/17/Go/gorilla-mux%E5%AD%A6%E4%B9%A0/"><span>基于 gorilla/mux 的路由分发</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://atseis.github.io/2021/02/24/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2/';
+  this.page.identifier = '2021/02/24/Go/go-vue学习-登录注册页面/';
+  this.page.title = 'Go+Vue 学习——简易注册、登录功能demo——01Vue前端排版';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'atseis' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script><script id="dsq-count-scr" src="https://atseis.disqus.com/count.js" async></script></div></div><footer class="footer-bg" style="background-image: url(/images/天空.jpeg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By Wu Yang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

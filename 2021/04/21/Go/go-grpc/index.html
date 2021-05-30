@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Go-gRPC"><meta name="keywords" content="Golang,后端"><meta name="author" content="Wu Yang"><meta name="copyright" content="Wu Yang"><title>Go-gRPC | Dr.Phantom's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.3.0'
+} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#protocol-buffers"><span class="toc-number">1.</span> <span class="toc-text"> Protocol Buffers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%8D%8F%E8%AE%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text"> 定义协议格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95-protocol-buffer"><span class="toc-number">1.2.</span> <span class="toc-text"> 扩展 Protocol Buffer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#packages"><span class="toc-number">1.3.</span> <span class="toc-text"> Packages</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#implementation"><span class="toc-number">2.</span> <span class="toc-text"> Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#server"><span class="toc-number">2.1.</span> <span class="toc-text"> Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#client"><span class="toc-number">2.2.</span> <span class="toc-text"> Client</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.3.</span> <span class="toc-text"> 4种不同类型的服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#server-side"><span class="toc-number">2.3.1.</span> <span class="toc-text"> server-side</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#client-side"><span class="toc-number">2.3.2.</span> <span class="toc-text"> client-side</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bidirectional"><span class="toc-number">2.3.3.</span> <span class="toc-text"> bidirectional</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/head.jpg"></div><div class="author-info__name text-center">Wu Yang</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/atseis">FOLLOW Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/images/天空.jpeg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Dr.Phantom's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Go-gRPC</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-04-21</time><span class="post-meta__separator">|</span><i class="fa fa-comment-o post-meta__icon" aria-hidden="true"></i><a href="/2021/04/21/Go/go-grpc/#disqus_thread"><span class="disqus-comment-count" data-disqus-identifier="2021/04/21/Go/go-grpc/"></span></a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">906</span><span class="post-meta__separator">|</span><span>Reading time: 3 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="protocol-buffers"><a class="markdownIt-Anchor" href="#protocol-buffers"></a> Protocol Buffers</h1>
+<p>protoc 是一个非常方便的处理类似于 c-s 间数据交换的工具。通过便捷的对数据格式的定义，生成相对应的 Go gRPC 所会用到的代码。</p>
+<h2 id="定义协议格式"><a class="markdownIt-Anchor" href="#定义协议格式"></a> 定义协议格式</h2>
+<ul>
+<li>编辑 <code>.proto</code>
+<ul>
+<li>对每个数据结构添加 message</li>
+<li>对每个 message 中的 field 确定一个 name, type</li>
+</ul>
+</li>
+</ul>
+<p>其中 .proto 文件：</p>
+<ul>
+<li>start with a <strong>package declaration</strong>
+<ul>
+<li>package declaration: 防止不同项目间 name conflicts</li>
+</ul>
+</li>
+<li>option go_package = “…” 定义包含为该文件生成的所有代码的包的导入路径，具体会在下一节叙述</li>
+<li>message 定义：
+<ul>
+<li>tags: 1-15 最好给共同使用的，或 repeated elements</li>
+<li>repeated field: the field may be repeated any number of times</li>
+</ul>
+</li>
+<li>生成类
+<ul>
+<li>在 <code>.proto</code> 上运行 <code>protoc</code></li>
+<li><code>protoc</code> 的主要的几个参数
+<ul>
+<li>-I=$SRC_DIR</li>
+<li>–go_out=$DST_DIR</li>
+<li>–go-grpc_out=$DST_DIR</li>
+<li>the path to the .proto file</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="扩展-protocol-buffer"><a class="markdownIt-Anchor" href="#扩展-protocol-buffer"></a> 扩展 Protocol Buffer</h2>
+<p>当之后对已有的 protocol buffer 定义更改时，如何</p>
+<ul>
+<li>让新的向后兼容？</li>
+<li>让旧的向前兼容？</li>
+</ul>
+<p><strong>答</strong>：在新版本中：</p>
+<ul>
+<li>不得改变任何已存在 field 的 tag numbers</li>
+<li>可以删除 fields</li>
+<li>可以添加新 fields，但必须使用新的 tag numbers (甚至不能和删除的一样)</li>
+</ul>
+<h2 id="packages"><a class="markdownIt-Anchor" href="#packages"></a> Packages</h2>
+<p>有两种定义 <code>import path</code> 的方式：</p>
+<ul>
+<li>在 <code>.proto</code> 文件中声明</li>
+<li>在命令行使用 <code>protoc</code> 时声明</li>
+<li>当上述两种都被声明时，命令行中的声明优先</li>
+</ul>
+<p>在 <code>.proto</code> 中声明的方式：</p>
+<ul>
+<li><code>option go_package = &quot;examples/grpc-usage&quot;</code></li>
+</ul>
+<p><code>The import path is used to determine which import statements must be generated when one .proto file imports another .proto file</code></p>
+<ul>
+<li>import path 被用来决定当一个 <code>.proto</code> import 另一个 <code>.proto</code> 时，哪条 import statement 被生成
+<ul>
+<li>比如 <code>a.proto</code> import <code>b.proto</code> 时
+<ul>
+<li>生成的 <code>a.pb.go</code> 就需要 import 包含 <code>b.pb.go</code> 的 package</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>此外，import path 同时会参与构建输出的文件名
+<ul>
+<li>比如 <code>option go_package = &quot;examples/grpc-usage&quot;</code></li>
+<li>就会在当前文件夹下创建目录 examples/grpc-usage，然后将 <code>.pb.go, _grpc.pb.go</code> 放入其中</li>
+<li>生成的 <code>.go</code> 文件对应的 package 名则为当前目录名</li>
+</ul>
+</li>
+</ul>
+<h1 id="implementation"><a class="markdownIt-Anchor" href="#implementation"></a> Implementation</h1>
+<h2 id="server"><a class="markdownIt-Anchor" href="#server"></a> Server</h2>
+<p>逻辑很简单</p>
+<ul>
+<li>定义一个 Server 类
+<ul>
+<li>继承 .proto 导出的 Umimplemented…Server</li>
+<li>并实现 Umimplemented…Server 对应的几个方法</li>
+</ul>
+</li>
+</ul>
+<p>之后便是使用：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// 创建一个对指定端口的监听</span></span><br><span class="line">	lis, err := net.Listen(<span class="string">&quot;tcp&quot;</span>, port)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;Failed to listen: %v&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">// 创建 grpc Server</span></span><br><span class="line">	s := grpc.NewServer()</span><br><span class="line">    <span class="comment">// 注册为所定义的 Server</span></span><br><span class="line">	pb.RegisterGreeterServer(s, &amp;server&#123;&#125;)</span><br><span class="line">    <span class="comment">// Server 与监听的 lis 进行绑定</span></span><br><span class="line">	<span class="keyword">if</span> err := s.Serve(lis); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;Failed to serve: %v&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="client"><a class="markdownIt-Anchor" href="#client"></a> Client</h2>
+<p>主要有2点：</p>
+<ol>
+<li>创建 Client
+<ul>
+<li>拨号</li>
+<li>注册</li>
+</ul>
+</li>
+<li>使用 Client</li>
+</ol>
+<p>创建：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set up a connection to the server.</span></span><br><span class="line">	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;did not connect: %v&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line">	c := pb.NewGreeterClient(conn)</span><br></pre></td></tr></table></figure>
+<p>创建之后便可以通过 c 进行各种 gRPC 调用了：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   r, err := c.SayHello(ctx, &amp;pb.HelloRequest&#123;Name: name&#125;)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	log.Fatalf(<span class="string">&quot;could not greet: %v&quot;</span>, err)</span><br><span class="line">&#125;</span><br><span class="line">log.Printf(<span class="string">&quot;Greeting: %s&quot;</span>, r.GetMessage())</span><br></pre></td></tr></table></figure>
+<p>可以看到对 Client 的使用：</p>
+<ol>
+<li>直接调用设置的方法 SayHello 调用 RPC</li>
+<li>对接收到请求进行里面信息的提取：GetMessage()</li>
+</ol>
+<h2 id="4种不同类型的服务"><a class="markdownIt-Anchor" href="#4种不同类型的服务"></a> 4种不同类型的服务</h2>
+<p>以 c-s 端发送、接收的数据是否是 stream 作为分类依据</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">client</th>
+<th style="text-align:center">server</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">a simple RPC</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">a server-side streaming RPC</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">stream</td>
+</tr>
+<tr>
+<td style="text-align:center">a client-side streaming RPC</td>
+<td style="text-align:center">stream</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">a bidirectional streaming RPC</td>
+<td style="text-align:center">stream</td>
+<td style="text-align:center">stream</td>
+</tr>
+</tbody>
+</table>
+<h3 id="server-side"><a class="markdownIt-Anchor" href="#server-side"></a> server-side</h3>
+<p>Client:</p>
+<ul>
+<li>创建 stream
+<ul>
+<li><code>stream, err:=client.ListFeatures(ctx,rect)</code></li>
+</ul>
+</li>
+<li>接收
+<ul>
+<li><code>feature, err:= stream.Recv()</code></li>
+</ul>
+</li>
+</ul>
+<p>Server:</p>
+<ul>
+<li>发送
+<ul>
+<li><code>if err:=stream.Send(feature);err!=nil&#123;&#125;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="client-side"><a class="markdownIt-Anchor" href="#client-side"></a> client-side</h3>
+<p>Client:</p>
+<ul>
+<li>创建 stream</li>
+<li>发送</li>
+<li>关闭与接收
+<ul>
+<li><code>reply, err:= stream.CloseAndRecv()</code></li>
+</ul>
+</li>
+</ul>
+<p>Server:</p>
+<ul>
+<li>接收</li>
+<li>发送与关闭
+<ul>
+<li><code>if err==io.EOF&#123;...return stream.SendAndClose(&amp;pb.RouteSummary&#123;...&#125;)&#125;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="bidirectional"><a class="markdownIt-Anchor" href="#bidirectional"></a> bidirectional</h3>
+<p>Client:</p>
+<ul>
+<li>创建 stream</li>
+<li>接收：需要单独开一个线程</li>
+<li>发送</li>
+<li>关闭发送
+<ul>
+<li><code>stream.CloseSend()</code></li>
+</ul>
+</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Wu Yang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://atseis.github.io/2021/04/21/Go/go-grpc/">https://atseis.github.io/2021/04/21/Go/go-grpc/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2021/02/25/Go/go-vue%E5%AD%A6%E4%B9%A0-%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C-%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/"><span>Go+Vue 学习——简易注册、登录功能demo——03前后端交互</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://atseis.github.io/2021/04/21/Go/go-grpc/';
+  this.page.identifier = '2021/04/21/Go/go-grpc/';
+  this.page.title = 'Go-gRPC';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'atseis' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script><script id="dsq-count-scr" src="https://atseis.disqus.com/count.js" async></script></div></div><footer class="footer-bg" style="background-image: url(/images/天空.jpeg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By Wu Yang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

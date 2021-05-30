@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="爬虫之 requests 库"><meta name="keywords" content="Python,Spider"><meta name="author" content="Wu Yang"><meta name="copyright" content="Wu Yang"><title>爬虫之 requests 库 | Dr.Phantom's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.3.0'
+} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%88%AC%E8%99%AB%E4%B9%8B-requests-%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text"> 爬虫之 requests 库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text"> 基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 请求方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E7%BB%93%E6%9E%9C"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 请求结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E8%AF%B7%E6%B1%82%E7%BB%93%E6%9E%9C"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 解析请求结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 会话管理</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/head.jpg"></div><div class="author-info__name text-center">Wu Yang</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/atseis">FOLLOW Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/images/天空.jpeg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Dr.Phantom's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">爬虫之 requests 库</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-05</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/tool/">tool</a><span class="post-meta__separator">|</span><i class="fa fa-comment-o post-meta__icon" aria-hidden="true"></i><a href="/2020/05/05/%E7%88%AC%E8%99%AB/requests/#disqus_thread"><span class="disqus-comment-count" data-disqus-identifier="2020/05/05/爬虫/requests/"></span></a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">884</span><span class="post-meta__separator">|</span><span>Reading time: 3 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="爬虫之-requests-库"><a class="markdownIt-Anchor" href="#爬虫之-requests-库"></a> 爬虫之 requests 库</h1>
+<p>相比 urllib， requests 库更加强大，出于对快速掌握技能的角度，故先只研究此库</p>
+<h2 id="基本用法"><a class="markdownIt-Anchor" href="#基本用法"></a> 基本用法</h2>
+<h3 id="请求方法"><a class="markdownIt-Anchor" href="#请求方法"></a> 请求方法</h3>
+<p>requests 拥有更直白的方法，比如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r=requests.get(<span class="string">&#x27;http://httpbin.org/&#x27;</span>)</span><br><span class="line">r=requests.put(<span class="string">&#x27;http://httpbin.org/put&#x27;</span>)</span><br><span class="line">r=requests.delete(<span class="string">&#x27;http://httpbin.org/delete&#x27;</span>)</span><br><span class="line">r=requests.post(<span class="string">&#x27;http://httpbin.org/post)</span></span><br><span class="line"><span class="string">r=requests.head(&#x27;</span>http://httpbin.org/get<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">r=requests.options(&#x27;</span>http://httpbin.org/get<span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+<p>除此以外，其余参数也都可以直接在括弧中设置，比如：</p>
+<ul>
+<li>params=data： 请求中需要传递参数时使用
+<ul>
+<li>data 是一个字典</li>
+</ul>
+</li>
+<li>headers=headers <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>：传递头信息</li>
+</ul>
+<ul>
+<li>data=data: POST 发送表单时使用
+<ul>
+<li>data 是一个字典</li>
+</ul>
+</li>
+<li>files=files: 文件上传时使用
+<ul>
+<li>files 是一个字典： {‘file’: open(‘favicon.ico’, ‘rb’)}</li>
+</ul>
+</li>
+<li>cookies=jar: 设置 cookies 时使用
+<ul>
+<li>jar 的构造：
+<ol>
+<li>jar=requests.cookies.RequestsCookieJar()</li>
+<li>jar.set(key,value) 多次</li>
+</ol>
+</li>
+<li>实际上，Cookie 直接设置在 headers 中往往更方便(key=‘Cookie’)</li>
+</ul>
+</li>
+<li>verify=False: 用于控制不验证SSL证书（默认是自动验证）</li>
+<li>cert=(’/path/server.crt’,’/path/key’)
+<ol>
+<li>cert 可以是单个文件（包含密钥、证书）</li>
+<li>也可以是一个包含两个文件路径的元组</li>
+</ol>
+</li>
+<li>proxies=proxies: 用于设置代理
+<ul>
+<li>proxies 是一个字典，形如 ‘https’:‘socks5://user:password@host:port’</li>
+</ul>
+</li>
+<li>timeout: 设置超时时间</li>
+<li>auth=HTTPBasicAuth(‘username’,‘password’): 有些网站需要认证
+<ul>
+<li>默认使用HTTPBasicAuth类来认证，因此如果使用HTTPBasicAuth,可简写为 auth=(‘username’,‘password’)</li>
+<li>也提供了其他的认证方式，不过需要安装相应库</li>
+</ul>
+</li>
+</ul>
+<p>以上是在请求方法中设置各种参数来达成目的，除此以外，可以将需要达成的种种目的封装成一个数据结构——Prepared Request：</p>
+<ol>
+<li>将各种参数构造成 Request 对象</li>
+<li>利用 Session 的 prepare_request() 转换成一个 Prepared Request 对象</li>
+<li>调用 send 发送</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> Request, Session</span><br><span class="line">......</span><br><span class="line">s=Session()</span><br><span class="line">req=Request(<span class="string">&#x27;POST&#x27;</span>,url, data=data, headers=headers)</span><br><span class="line">prepped=s.prepare_request(req)</span><br><span class="line">r=s.send(prepped)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+<h3 id="请求结果"><a class="markdownIt-Anchor" href="#请求结果"></a> 请求结果</h3>
+<p>Q: 那么<code>r=requests.get(url)</code>返回的结果、类型是什么？<br />
+A: 类型为 &lt;class ‘requests.models.Response’&gt;</p>
+<p>Q: 如何从 r 中获得有用信息？<br />
+A: r 包含很多属性和方法，比如：</p>
+<ol>
+<li>status_code</li>
+<li>text：字符串形式: 可能呈现为 html 格式，或是字典格式</li>
+<li>content：以二进制形式输出请求结果</li>
+<li>cookies</li>
+<li>json(): 如果text呈现字符串形式，则可直接r.json()转化成字典形式</li>
+</ol>
+<h3 id="解析请求结果"><a class="markdownIt-Anchor" href="#解析请求结果"></a> 解析请求结果</h3>
+<p>从请求的结果中我们可以获得很多信息，其中一部分是可以直接调用属性得到的，比如:</p>
+<ul>
+<li>status_code</li>
+<li>cookies</li>
+</ul>
+<p>但是 text, content 却需要进一步的处理才能得到有效信息</p>
+<ol>
+<li>content 的处理比较容易，实际上只需要知道获取的类型（视频？音频？图片？）然后写入即可</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">r=requests.get(<span class="string">&#x27;https://github.com/favicon.ico&#x27;</span>)</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;favicon.ico&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(r.content)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>text 的解析需要进一步的处理，主要有两种方法：
+<ol>
+<li>利用正则表达式 re</li>
+<li>调用解析库</li>
+</ol>
+</li>
+</ol>
+<h3 id="会话管理"><a class="markdownIt-Anchor" href="#会话管理"></a> 会话管理</h3>
+<p>如果每次需要请求一个网页，都只是简单的调用 requests.get() 这样的方法，那么每次返回得到的结果无疑是得不到保存，也就是说不具备延续性</p>
+<p>那么一个处理方法就是使用会话</p>
+<p>会话的使用很简单，主要有2步：</p>
+<ol>
+<li>创建会话</li>
+<li>然后在创建的对象中像前一节所述调用各种方法即可</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">s=requests.Session()</span><br><span class="line">r=s.get(...)</span><br></pre></td></tr></table></figure>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>如何获取？目前只知道直接复制，略觉麻烦 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Wu Yang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://atseis.github.io/2020/05/05/爬虫/requests/">https://atseis.github.io/2020/05/05/爬虫/requests/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/Spider/">Spider</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/05/%E7%88%AC%E8%99%AB/re/"><i class="fa fa-chevron-left">  </i><span>正则表达式 re 库</span></a></div><div class="next-post pull-right"><a href="/2020/05/05/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/00%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/"><span>编译原理-00写在前面</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://atseis.github.io/2020/05/05/%E7%88%AC%E8%99%AB/requests/';
+  this.page.identifier = '2020/05/05/爬虫/requests/';
+  this.page.title = '爬虫之 requests 库';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'atseis' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script><script id="dsq-count-scr" src="https://atseis.disqus.com/count.js" async></script></div></div><footer class="footer-bg" style="background-image: url(/images/天空.jpeg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By Wu Yang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

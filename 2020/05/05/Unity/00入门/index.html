@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Unity-00入门"><meta name="keywords" content="Unity"><meta name="author" content="Wu Yang"><meta name="copyright" content="Wu Yang"><title>Unity-00入门 | Dr.Phantom's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '5.3.0'
+} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text"> 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text"> 功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%B4%A0%E6%9D%90%E8%B5%8B%E4%BA%88%E6%80%A7%E8%B4%A8-%E5%8A%9F%E8%83%BD%E7%A2%B0%E6%92%9E-%E5%88%9A%E4%BD%93"><span class="toc-number">2.1.</span> <span class="toc-text"> 对素材“赋予”性质、功能（碰撞、刚体）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%88%B6%E4%BD%93"><span class="toc-number">2.2.</span> <span class="toc-text"> 预制体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c%E8%84%9A%E6%9C%AC"><span class="toc-number">2.3.</span> <span class="toc-text"> C#脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9"><span class="toc-number">2.3.1.</span> <span class="toc-text"> 内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA"><span class="toc-number">2.3.2.</span> <span class="toc-text"> 行为</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%90%91%E9%94%AE%E6%8E%A7%E5%88%B6%E4%BA%BA%E7%89%A9%E7%A7%BB%E5%8A%A8"><span class="toc-number">2.3.2.1.</span> <span class="toc-text"> 方向键控制人物移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E4%BA%A7%E7%94%9F%E5%8F%A6%E5%A4%96%E7%9A%84%E7%89%A9%E4%BD%93%E4%BA%BA%E7%89%A9%E5%8F%91%E5%B0%84%E5%AD%90%E5%BC%B9"><span class="toc-number">2.3.2.2.</span> <span class="toc-text"> 控制产生另外的物体：人物发射子弹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%89%A9%E4%BD%93%E7%9A%84%E7%A2%B0%E6%92%9E%E6%95%8C%E4%BA%BA%E6%92%9E%E5%A2%99-%E7%8E%A9%E5%AE%B6%E9%81%87%E5%88%B0%E6%95%8C%E4%BA%BA-%E5%AD%90%E5%BC%B9%E6%89%93%E4%B8%AD%E6%95%8C%E4%BA%BA"><span class="toc-number">2.3.2.3.</span> <span class="toc-text"> 不同物体的碰撞：敌人撞墙、玩家遇到敌人、子弹打中敌人</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/head.jpg"></div><div class="author-info__name text-center">Wu Yang</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/atseis">FOLLOW Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/images/天空.jpeg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Dr.Phantom's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Unity-00入门</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-05</time><span class="post-meta__separator">|</span><i class="fa fa-comment-o post-meta__icon" aria-hidden="true"></i><a href="/2020/05/05/Unity/00%E5%85%A5%E9%97%A8/#disqus_thread"><span class="disqus-comment-count" data-disqus-identifier="2020/05/05/Unity/00入门/"></span></a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.5k</span><span class="post-meta__separator">|</span><span>Reading time: 5 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h1>
+<p>前些天完成作业临场突击 Unity，这里简要总结一下</p>
+<p>总功能：控制人物移动，进行攻击</p>
+<p>完成功能需要涉及到：</p>
+<ul>
+<li>素材的导入</li>
+<li>素材“封装”成prefabs</li>
+<li>给物体增加物理特性：刚体、碰撞</li>
+<li>脚本与物体的结合</li>
+</ul>
+<h1 id="功能"><a class="markdownIt-Anchor" href="#功能"></a> 功能</h1>
+<p>首先，导入素材不多讲，直接拖到页面中即可</p>
+<h2 id="对素材赋予性质-功能碰撞-刚体"><a class="markdownIt-Anchor" href="#对素材赋予性质-功能碰撞-刚体"></a> 对素材“赋予”性质、功能（碰撞、刚体）</h2>
+<p>直接导入的素材，比如 png, jpg 等只是单纯的图片，并不具备我们需要的性质。比如我们导入了一张地面的图片，但是这个“地面”并不能将人承载起来，导入了一个球的图片，“球”也不具备重力。</p>
+<p>Q：如何给素材赋予这些能力？<br />
+A：选中素材(以二维举例)，然后菜单栏：Component-&gt;Physics 2D-&gt;Rigidbody 2D</p>
+<p>这样，该素材就具备了“碰撞”的能力</p>
+<p>同样，对于一个刚体（重力等）可以添加 Rigidbody 2D 组件</p>
+<p>在以上例子中，想要实现人站在地上的功能，需要：</p>
+<ul>
+<li>人: Rigidbody 2D, Rigidbody 2D</li>
+<li>地: Rigidbody 2D</li>
+</ul>
+<p>其余的功能或大小性质等类似</p>
+<h2 id="预制体"><a class="markdownIt-Anchor" href="#预制体"></a> 预制体</h2>
+<p>以上的步骤已经可以满足我们的需要，但如果同样一类物品需要大量拖入场景使用，如果每一个都像以上所述单独添加组件等进行调整，无疑十分繁琐。</p>
+<p>所以我们可以对素材进行封装：</p>
+<ol>
+<li>将素材拖入场景，对其进行组件的添加以及其他性质的调整</li>
+<li>在 Scene 中选中物体，可以发现对应 Hierarchy 窗口中也被选中</li>
+<li>将 Hierarchy 中被选中的条例拖入 Project 中：可以在 Assets 中新建一个文件夹 Prefabs 等，然后这样被封装后的产物就可重复使用</li>
+</ol>
+<p>不同预制体间的层次问题可以在 工具栏-&gt;Edit-&gt;Project Settings-&gt;Physics 2D 下方的 Layer Collision Matrix 中设置</p>
+<h2 id="c脚本"><a class="markdownIt-Anchor" href="#c脚本"></a> C#脚本</h2>
+<p>想要实现方向键控制人物移动以及攻击等功能，都需要编写脚本来实现</p>
+<p>目前掌握的都是：一类物体对应一个脚本。比如：</p>
+<ul>
+<li>玩家对应一个玩家的控制脚本</li>
+<li>敌人对应一个敌人的控制脚本</li>
+<li>子弹对应一个子弹的控制脚本</li>
+</ul>
+<p>值得注意的是：</p>
+<ul>
+<li>脚本的名称和脚本内容的类名一定要匹配</li>
+<li>想要在一个脚本中引用其他的类，比如想要实现敌人撞到墙后改变运动方向，就必须要对墙也编写一个脚本，哪怕脚本为空，否则“墙”的存在无法在敌人脚本中得到体现</li>
+<li>编写完脚本后将脚本拖到对应物体的 Inspector 栏中实现“绑定”的效果</li>
+</ul>
+<h3 id="内容"><a class="markdownIt-Anchor" href="#内容"></a> 内容</h3>
+<p>脚本内容可以有很多，但目前实现的只有 4 个：</p>
+<ol>
+<li>Awake()： 早于 Start()</li>
+<li>Start()</li>
+<li>Update(): 角色方向的控制等都会在这里实现</li>
+<li>OnCollisionEnter2D(Collision other): 实现碰撞后行为，如子弹打中敌人后子弹消失，敌人血条下降等</li>
+</ol>
+<p>对于一个刚体，如果在后面对其有其他操作，需要在最开始创建一个刚体组件，比如：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rig = GetComponent&lt;Rigidbody2D&gt;();</span><br></pre></td></tr></table></figure>
+<p>其他一些需要在之后引用的量也需要提前声明，比如 速度、移动方向、力</p>
+<h3 id="行为"><a class="markdownIt-Anchor" href="#行为"></a> 行为</h3>
+<p>主要实现了：</p>
+<ol>
+<li>方向键控制人物移动</li>
+<li>控制产生另外的物体：人物发射子弹</li>
+<li>不同物体的碰撞：敌人撞墙、玩家遇到敌人、子弹打中敌人</li>
+</ol>
+<h4 id="方向键控制人物移动"><a class="markdownIt-Anchor" href="#方向键控制人物移动"></a> 方向键控制人物移动</h4>
+<p>以一个方向为例：</p>
+<ol>
+<li>监听键盘输入：自带对 方向键、wasd 的检测</li>
+<li>获得方向向量：创建 Vector2 (以二维为例)</li>
+<li>获得当前玩家位置: transform.position  : transform 这个量很特殊，自带当前物体的一些性质（当前位置等）</li>
+<li>根据键盘输入计算位移</li>
+<li>设置位置</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">float</span> moveX = Input.GetAxisRaw(<span class="string">&quot;Horizontal&quot;</span>);</span><br><span class="line">Vector2 moveVector = <span class="keyword">new</span> Vector2(moveX, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (moveVector.x != <span class="number">0</span>)&#123; <span class="comment">//获取玩家朝向</span></span><br><span class="line">    lookDirection = moveVector;</span><br><span class="line">&#125;</span><br><span class="line">Vector2 position = transform.position;</span><br><span class="line">position.x += moveX * speed * Time.deltaTime;</span><br><span class="line">transform.position = position;</span><br></pre></td></tr></table></figure>
+<p>按下空格控制人物跳跃：</p>
+<ol>
+<li>监听键盘输入</li>
+<li>设置刚体的力、速度</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Space))&#123;    <span class="comment">//如果按下空格 </span></span><br><span class="line">    rig.AddForce(<span class="keyword">new</span> Vector2(<span class="number">0</span>, jumpForce));   <span class="comment">//给刚体一个向上的力</span></span><br><span class="line">    horizontal = Input.GetAxis(<span class="string">&quot;Horizontal&quot;</span>);   <span class="comment">//水平方向按键偏移量</span></span><br><span class="line">    move = horizontal * moveSpeed;   <span class="comment">//刚体具体速度</span></span><br><span class="line">    rig.velocity = <span class="keyword">new</span> Vector2(move, rig.velocity.y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="控制产生另外的物体人物发射子弹"><a class="markdownIt-Anchor" href="#控制产生另外的物体人物发射子弹"></a> 控制产生另外的物体：人物发射子弹</h4>
+<ol>
+<li>监听键盘输入</li>
+<li>根据最开始声明的 GameObject 量进行实例化<strong>产生</strong>物体：具体此 GameObject 是指产生什么物体（比如子弹）需要返回界面在对应玩家的 Inspector 中进行选择：可以直接将子弹的 预制体 拖入到相应选项中</li>
+<li>获得产生物体的 <strong>类</strong>：上一步的产生的物体只是一个单纯的素材或是预制体，并不具备其他的性质。想要获得比如对子弹所设置的脚本中的其他方法还需根据产生的物体获取对应的类的对象</li>
+<li>根据类进行其他的操作</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Input.GetKeyDown(KeyCode.J))&#123;</span><br><span class="line">    GameObject bullet = Instantiate(bulletPrefab, rig.position, Quaternion.identity);</span><br><span class="line">    Bullet bc = bullet.GetComponent&lt;Bullet&gt;();</span><br><span class="line">    <span class="keyword">if</span> (bc != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        bc.Move(lookDirection, <span class="number">300</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="不同物体的碰撞敌人撞墙-玩家遇到敌人-子弹打中敌人"><a class="markdownIt-Anchor" href="#不同物体的碰撞敌人撞墙-玩家遇到敌人-子弹打中敌人"></a> 不同物体的碰撞：敌人撞墙、玩家遇到敌人、子弹打中敌人</h4>
+<p>以敌人为例：</p>
+<ol>
+<li>敌人有10滴血，每收到一次子弹打击扣一滴，当血扣完时死亡（消失）</li>
+<li>敌人撞到墙后改变运动方向</li>
+</ol>
+<p>如何获取碰撞自己的物体：</p>
+<ol>
+<li>OnCollisionEnter2D 参数中的 Collision2D 对象就是碰撞自己的物体</li>
+<li>但是具体该碰撞物体的信息需要专门获取：根据 Collision2D 获取组件： other.gameObject.GetComponent<Bullet>()</li>
+<li>然后就可根据获取的组件进行相应的判断和操作了</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnCollisionEnter2D</span>(<span class="params">Collision2D other</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Bullet e = other.gameObject.GetComponent&lt;Bullet&gt;();</span><br><span class="line">    <span class="keyword">if</span> (e != <span class="literal">null</span>)&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;敌人被子弹打中&quot;</span>);</span><br><span class="line">        health -= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (health == <span class="number">0</span>)&#123; </span><br><span class="line">        Destroy(<span class="keyword">this</span>.gameObject);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//撞到墙</span></span><br><span class="line">    Wall w = other.gameObject.GetComponent&lt;Wall&gt;();</span><br><span class="line">    <span class="keyword">if</span> (w != <span class="literal">null</span>)&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;撞到墙&quot;</span>);</span><br><span class="line">        lookDirection *= <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Wu Yang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://atseis.github.io/2020/05/05/Unity/00入门/">https://atseis.github.io/2020/05/05/Unity/00入门/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Unity/">Unity</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/02/02/Prometheus/01Start/"><i class="fa fa-chevron-left">  </i><span>Prometheus-01Start</span></a></div><div class="next-post pull-right"><a href="/2020/05/05/%E4%BA%8C%E8%BF%9B%E5%88%B6/pwnablekr%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/"><span>pwnablekr 基础笔记</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://atseis.github.io/2020/05/05/Unity/00%E5%85%A5%E9%97%A8/';
+  this.page.identifier = '2020/05/05/Unity/00入门/';
+  this.page.title = 'Unity-00入门';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'atseis' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script><script id="dsq-count-scr" src="https://atseis.disqus.com/count.js" async></script></div></div><footer class="footer-bg" style="background-image: url(/images/天空.jpeg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By Wu Yang</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
